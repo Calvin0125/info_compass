@@ -5,3 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+ai = ResearchTopic.create(title: "Artificial Intelligence")
+SearchTerm.create(research_topic_id: ai.id, term: "artificial intelligence")
+SearchTerm.create(research_topic_id: ai.id, term: "machine learning")
+
+
