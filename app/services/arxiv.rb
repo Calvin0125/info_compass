@@ -2,7 +2,7 @@ require 'faraday'
 require 'nokogiri'
 
 class Arxiv
-  def self.today_or_ten_most_recent(search_terms)
+  def self.ten_most_recent(search_terms)
     response = self.request(search_terms)
     self.format(response)
   end
@@ -11,7 +11,7 @@ class Arxiv
 
   def self.format(response)
     articles = []
-    nokogiri_articles = Nokogiri::XML(response)
+    nokogiri_articles = Nokogiri::XML(response.body)
     nokogiri_articles.xpath('//xmlns:entry').each do |entry|
       article = {}
       article[:title] = entry.xpath('.//xmlns:title').text

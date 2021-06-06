@@ -16,4 +16,12 @@ describe ResearchTopic do
       expect(ResearchTopic.all).to eq(ResearchTopic.order(:title))
     end
   end
+
+  describe "::get_new_articles", :vcr do
+    it "test vcr works" do
+      articles = ResearchTopic.get_new_articles
+      expect(articles.class).to eq(Array)
+      expect(articles.length).to eq(10)
+    end
+  end
 end

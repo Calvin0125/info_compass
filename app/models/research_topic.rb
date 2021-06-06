@@ -6,4 +6,7 @@ class ResearchTopic < ActiveRecord::Base
 
   validates_presence_of :title
   
+  def self.get_new_articles
+    Arxiv.ten_most_recent(["artificial intelligence"])
+  end
 end
