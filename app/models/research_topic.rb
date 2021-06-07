@@ -9,7 +9,8 @@ class ResearchTopic < ActiveRecord::Base
   def self.add_new_articles
     self.all.each do |topic|
       search_terms = topic.search_terms.map(&:term)
-      articles = Arxiv.ten_most_recent(search_terms)
+      ignored_ids = IgnoredArticle.all.map(&:api_id)
+      articles = Arxiv.ten_most_recent(search_terms, ignored_ids)
       articles.each do |article|
         unless topic.research_articles.where(api: article[:api], api_id: article[:api_id]).length > 0
           article[:research_topic_id] = topic.id

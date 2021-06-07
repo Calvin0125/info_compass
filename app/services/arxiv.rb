@@ -2,7 +2,7 @@ require 'faraday'
 require 'nokogiri'
 
 class Arxiv
-  def self.ten_most_recent(search_terms)
+  def self.ten_most_recent(search_terms, ignored_ids)
     response = self.request(search_terms)
     self.format(response)
   end
