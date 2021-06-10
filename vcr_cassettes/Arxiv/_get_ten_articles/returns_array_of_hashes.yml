@@ -1,0 +1,261 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://export.arxiv.org/api/query?search_query=ti:%22gene%20editing%22%20OR%20abs:%22gene%20editing%22&sortBy=submittedDate&sortOrder=descending&start=0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 10 Jun 2021 19:58:06 GMT
+      Server:
+      - Apache
+      Access-Control-Allow-Origin:
+      - "*"
+      Vary:
+      - Accept-Encoding,User-Agent
+      Content-Length:
+      - '4206'
+      Content-Type:
+      - application/atom+xml; charset=UTF-8
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <feed xmlns="http://www.w3.org/2005/Atom">
+          <link href="http://arxiv.org/api/query?search_query%3Dti%3A%22gene%20editing%22%20OR%20abs%3A%22gene%20editing%22%26id_list%3D%26start%3D0%26max_results%3D10" rel="self" type="application/atom+xml"/>
+          <title type="html">ArXiv Query: search_query=ti:"gene editing" OR abs:"gene editing"&amp;id_list=&amp;start=0&amp;max_results=10</title>
+          <id>http://arxiv.org/api/MgGSus4K9a941e8OLrfRxcw5tm0</id>
+          <updated>2021-06-10T00:00:00-04:00</updated>
+          <opensearch:totalResults xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/">5</opensearch:totalResults>
+          <opensearch:startIndex xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/">0</opensearch:startIndex>
+          <opensearch:itemsPerPage xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/">10</opensearch:itemsPerPage>
+          <entry>
+            <id>http://arxiv.org/abs/2105.01171v1</id>
+            <updated>2021-05-03T21:20:20Z</updated>
+            <published>2021-05-03T21:20:20Z</published>
+            <title>Machine Learning Applications for Therapeutic Tasks with Genomics Data</title>
+            <summary>  Thanks to the increasing availability of genomics and other biomedical data,
+        many machine learning approaches have been proposed for a wide range of
+        therapeutic discovery and development tasks. In this survey, we review the
+        literature on machine learning applications for genomics through the lens of
+        therapeutic development. We investigate the interplay among genomics,
+        compounds, proteins, electronic health records (EHR), cellular images, and
+        clinical texts. We identify twenty-two machine learning in genomics
+        applications across the entire therapeutics pipeline, from discovering novel
+        targets, personalized medicine, developing gene-editing tools all the way to
+        clinical trials and post-market studies. We also pinpoint seven important
+        challenges in this field with opportunities for expansion and impact. This
+        survey overviews recent research at the intersection of machine learning,
+        genomics, and therapeutic development.
+        </summary>
+            <author>
+              <name>Kexin Huang</name>
+            </author>
+            <author>
+              <name>Cao Xiao</name>
+            </author>
+            <author>
+              <name>Lucas M. Glass</name>
+            </author>
+            <author>
+              <name>Cathy W. Critchlow</name>
+            </author>
+            <author>
+              <name>Greg Gibson</name>
+            </author>
+            <author>
+              <name>Jimeng Sun</name>
+            </author>
+            <link href="http://arxiv.org/abs/2105.01171v1" rel="alternate" type="text/html"/>
+            <link title="pdf" href="http://arxiv.org/pdf/2105.01171v1" rel="related" type="application/pdf"/>
+            <arxiv:primary_category xmlns:arxiv="http://arxiv.org/schemas/atom" term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+            <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+            <category term="q-bio.GN" scheme="http://arxiv.org/schemas/atom"/>
+            <category term="q-bio.QM" scheme="http://arxiv.org/schemas/atom"/>
+          </entry>
+          <entry>
+            <id>http://arxiv.org/abs/2103.10667v1</id>
+            <updated>2021-03-19T07:27:43Z</updated>
+            <published>2021-03-19T07:27:43Z</published>
+            <title>Search and localization dynamics of the CRISPR/Cas9 system</title>
+            <summary>  The CRISPR/Cas9 system acts as the prokariotic immune system and has
+        important applications in gene editing. The protein Cas9 is a crucial component
+        of this system. The role of Cas9 is to search for specific target sequences on
+        the DNA and cleave them. In this Letter, we show that a model of facilitated
+        diffusion fits data from single-molecule experiments and predicts that Cas9
+        search for targets by sliding, but with a short sliding length. We then
+        investigate how Cas9 explores a long DNA containing randomly placed targets. We
+        solve this problem by mapping it into the theory of Anderson localization in
+        condensed matter physics. Our theoretical approach rationalizes experimental
+        evidences on the distribution of Cas9 molecules along the DNA.
+        </summary>
+            <author>
+              <name>Qiao Lu</name>
+            </author>
+            <author>
+              <name>Deepak Bhat</name>
+            </author>
+            <author>
+              <name>Darya Stepanenko</name>
+            </author>
+            <author>
+              <name>Simone Pigolotti</name>
+            </author>
+            <arxiv:comment xmlns:arxiv="http://arxiv.org/schemas/atom">5 pages, 4 figures, submitted</arxiv:comment>
+            <link href="http://arxiv.org/abs/2103.10667v1" rel="alternate" type="text/html"/>
+            <link title="pdf" href="http://arxiv.org/pdf/2103.10667v1" rel="related" type="application/pdf"/>
+            <arxiv:primary_category xmlns:arxiv="http://arxiv.org/schemas/atom" term="q-bio.SC" scheme="http://arxiv.org/schemas/atom"/>
+            <category term="q-bio.SC" scheme="http://arxiv.org/schemas/atom"/>
+            <category term="cond-mat.stat-mech" scheme="http://arxiv.org/schemas/atom"/>
+          </entry>
+          <entry>
+            <id>http://arxiv.org/abs/2011.14224v1</id>
+            <updated>2020-11-28T22:08:16Z</updated>
+            <published>2020-11-28T22:08:16Z</published>
+            <title>Cyberbiosecurity: DNA Injection Attack in Synthetic Biology</title>
+            <summary>  Today arbitrary synthetic DNA can be ordered online and delivered within
+        several days. In order to regulate both intentional and unintentional
+        generation of dangerous substances, most synthetic gene providers screen DNA
+        orders. A weakness in the Screening Framework Guidance for Providers of
+        Synthetic Double-Stranded DNA allows screening protocols based on this guidance
+        to be circumvented using a generic obfuscation procedure inspired by early
+        malware obfuscation techniques. Furthermore, accessibility and automation of
+        the synthetic gene engineering workflow, combined with insufficient
+        cybersecurity controls, allow malware to interfere with biological processes
+        within the victim's lab, closing the loop with the possibility of an exploit
+        written into a DNA molecule presented by Ney et al. in USENIX Security'17. Here
+        we present an end-to-end cyberbiological attack, in which unwitting biologists
+        may be tricked into generating dangerous substances within their labs.
+        Consequently, despite common biosecurity assumptions, the attacker does not
+        need to have physical contact with the generated substance. The most
+        challenging part of the attack, decoding of the obfuscated DNA, is executed
+        within living cells while using primitive biological operations commonly
+        employed by biologists during in-vivo gene editing. This attack scenario
+        underlines the need to harden the synthetic DNA supply chain with protections
+        against cyberbiological threats. To address these threats we propose an
+        improved screening protocol that takes into account in-vivo gene editing.
+        </summary>
+            <author>
+              <name>Dor Farbiash</name>
+            </author>
+            <author>
+              <name>Rami Puzis</name>
+            </author>
+            <link href="http://arxiv.org/abs/2011.14224v1" rel="alternate" type="text/html"/>
+            <link title="pdf" href="http://arxiv.org/pdf/2011.14224v1" rel="related" type="application/pdf"/>
+            <arxiv:primary_category xmlns:arxiv="http://arxiv.org/schemas/atom" term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+            <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+          </entry>
+          <entry>
+            <id>http://arxiv.org/abs/2008.07488v2</id>
+            <updated>2020-08-20T16:18:58Z</updated>
+            <published>2020-08-17T17:31:20Z</published>
+            <title>Host immune response driving SARS-CoV-2 evolution</title>
+            <summary>  The transmission and evolution of severe acute respiratory syndrome
+        coronavirus 2 (SARS-CoV-2) are of paramount importance to the controlling and
+        combating of coronavirus disease 2019 (COVID-19) pandemic. Currently, near
+        15,000 SARS-CoV-2 single mutations have been recorded, having a great
+        ramification to the development of diagnostics, vaccines, antibody therapies,
+        and drugs. However, little is known about SARS-CoV-2 evolutionary
+        characteristics and general trend. In this work, we present a comprehensive
+        genotyping analysis of existing SARS-CoV-2 mutations. We reveal that host
+        immune response via APOBEC and ADAR gene editing gives rise to near 65\% of
+        recorded mutations. Additionally, we show that children under age five and the
+        elderly may be at high risk from COVID-19 because of their overreacting to the
+        viral infection. Moreover, we uncover that populations of Oceania and Africa
+        react significantly more intensively to SARS-CoV-2 infection than those of
+        Europe and Asia, which may explain why African Americans were shown to be at
+        increased risk of dying from COVID-19, in addition to their high risk of
+        getting sick from COVID-19 caused by systemic health and social inequities.
+        Finally, our study indicates that for two viral genome sequences of the same
+        origin, their evolution order may be determined from the ratio of mutation type
+        C$&gt;$T over T$&gt;$C.
+        </summary>
+            <author>
+              <name>Rui Wang</name>
+            </author>
+            <author>
+              <name>Yuta Hozumi</name>
+            </author>
+            <author>
+              <name>Yong-Hui Zheng</name>
+            </author>
+            <author>
+              <name>Changchuan Yin</name>
+            </author>
+            <author>
+              <name>Guo-Wei Wei</name>
+            </author>
+            <arxiv:comment xmlns:arxiv="http://arxiv.org/schemas/atom">22 pages, 15 figures</arxiv:comment>
+            <link href="http://arxiv.org/abs/2008.07488v2" rel="alternate" type="text/html"/>
+            <link title="pdf" href="http://arxiv.org/pdf/2008.07488v2" rel="related" type="application/pdf"/>
+            <arxiv:primary_category xmlns:arxiv="http://arxiv.org/schemas/atom" term="q-bio.GN" scheme="http://arxiv.org/schemas/atom"/>
+            <category term="q-bio.GN" scheme="http://arxiv.org/schemas/atom"/>
+            <category term="q-bio.PE" scheme="http://arxiv.org/schemas/atom"/>
+          </entry>
+          <entry>
+            <id>http://arxiv.org/abs/1909.04974v1</id>
+            <updated>2019-09-11T11:15:10Z</updated>
+            <published>2019-09-11T11:15:10Z</published>
+            <title>Computer-Aided Automated Detection of Gene-Controlled Social Actions of
+          Drosophila</title>
+            <summary>  Gene expression of social actions in Drosophilae has been attracting wide
+        interest from biologists, medical scientists and psychologists. Gene-edited
+        Drosophilae have been used as a test platform for experimental investigation.
+        For example, Parkinson's genes can be embedded into a group of newly bred
+        Drosophilae for research purpose. However, human observation of numerous tiny
+        Drosophilae for a long term is an arduous work, and the dependence on human's
+        acute perception is highly unreliable. As a result, an automated system of
+        social action detection using machine learning has been highly demanded. In
+        this study, we propose to automate the detection and classification of two
+        innate aggressive actions demonstrated by Drosophilae. Robust keypoint
+        detection is achieved using selective spatio-temporal interest points (sSTIP)
+        which are then described using the 3D Scale Invariant Feature Transform
+        (3D-SIFT) descriptors. Dimensionality reduction is performed using Spectral
+        Regression Kernel Discriminant Analysis (SR-KDA) and classification is done
+        using the nearest centre rule. The classification accuracy shown demonstrates
+        the feasibility of the proposed system.
+        </summary>
+            <author>
+              <name>Khan Faraz</name>
+            </author>
+            <author>
+              <name>Ahmed Bouridane</name>
+            </author>
+            <author>
+              <name>Richard Jiang</name>
+            </author>
+            <author>
+              <name>Tiancheng Xia</name>
+            </author>
+            <author>
+              <name>Paul Chazot</name>
+            </author>
+            <author>
+              <name>Abdel Ennaceur</name>
+            </author>
+            <arxiv:comment xmlns:arxiv="http://arxiv.org/schemas/atom">published on International Conference on Smart Cities at Cambridge
+          2018</arxiv:comment>
+            <arxiv:journal_ref xmlns:arxiv="http://arxiv.org/schemas/atom">International Conference on Smart Cities at Cambridge 2018</arxiv:journal_ref>
+            <link href="http://arxiv.org/abs/1909.04974v1" rel="alternate" type="text/html"/>
+            <link title="pdf" href="http://arxiv.org/pdf/1909.04974v1" rel="related" type="application/pdf"/>
+            <arxiv:primary_category xmlns:arxiv="http://arxiv.org/schemas/atom" term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+            <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+            <category term="cs.GR" scheme="http://arxiv.org/schemas/atom"/>
+          </entry>
+        </feed>
+  recorded_at: Thu, 10 Jun 2021 19:58:08 GMT
+recorded_with: VCR 6.0.0
