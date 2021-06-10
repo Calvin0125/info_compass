@@ -2,8 +2,8 @@ require 'faraday'
 require 'nokogiri'
 
 class Arxiv
-  def self.ten_most_recent(search_terms, ignored_ids)
-    response = self.request(search_terms)
+  def self.get_ten_articles(search_terms, page)
+    response = self.request(search_terms, page)
     self.format(response)
   end
 
@@ -39,18 +39,25 @@ class Arxiv
     author_csv
   end
 
-  def self.request(search_terms)
-    query = self.build_query(search_terms)
+  def self.request(search_terms, page)
+    query = self.build_query(search_terms, page)
     Faraday.get(URI.parse("http://export.arxiv.org/api/query?search_query=#{query}&sortBy=submittedDate&sortOrder=descending"))
   end
 
-  def self.build_query(search_terms)
+  def self.build_query(search_terms, page)
+    query = self.build_search_query(search_terms)
+    page = page.to_s + '0' if page > 0
+    query += "&start=#{page}"
+    query
+  end
+
+  def self.build_search_query(search_terms)
     query = ''
     search_terms.each.with_index do |term, index|
       if index == 0
-        query += "ti:\"#{term}\"ORabs:\"#{term}\""
+        query += "ti:\"#{term}\"+OR+abs:\"#{term}\""
       else
-        query += "ORti:\"#{term}\"ORabs:\"#{term}\""
+        query += "+OR+ti:\"#{term}\"+OR+abs:\"#{term}\""
       end
     end
     query

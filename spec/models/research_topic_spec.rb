@@ -42,5 +42,26 @@ describe ResearchTopic do
       expect(ResearchArticle.count).to eq(10)
       expect(ResearchArticle.where(id: 2).length).to eq(0)
     end
+
+    it "will request multiple pages until there are 10 new articles" do
+      topic = Fabricate(:research_topic)
+      Fabricate(:research_article, research_topic_id: topic.id, api: 'arxiv', 
+      api_id: 'http://arxiv.org/abs/2106.05259v1', new: false, read: true)
+      Fabricate(:research_article, research_topic_id: topic.id, api: 'arxiv',
+      api_id: 'http://arxiv.org/abs/2106.05228v1', new: false, read: true, id: 2)
+      Fabricate(:search_term, research_topic_id: topic.id, term: "black holes")
+      ResearchTopic.add_new_articles
+      expect(ResearchArticle.count).to eq(12)
+    end
+
+    it "won't add the same article twice" do
+      topic = Fabricate(:research_topic)
+      api_id = 'http://arxiv.org/abs/2106.05259v1'
+      Fabricate(:research_article, research_topic_id: topic.id, api: 'arxiv', 
+      api_id: api_id, new: false, read: true)
+      Fabricate(:search_term, research_topic_id: topic.id, term: "black holes")
+      ResearchTopic.add_new_articles
+      expect(topic.research_articles.where(api: 'arxiv', api_id: api_id).length).to eq(1) 
+    end
   end
 end
