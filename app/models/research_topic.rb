@@ -5,6 +5,7 @@ class ResearchTopic < ActiveRecord::Base
   has_many :search_terms
 
   validates_presence_of :title
+  validates_uniqueness_of :title
   
   def self.add_new_articles
     self.all.each do |topic|
@@ -16,8 +17,8 @@ class ResearchTopic < ActiveRecord::Base
       # section with 10 articles, it will look for older and older articles
       # to find 10 the user hasn't seen before
       loop do
-        topic.process_next_ten_articles(search_terms, page)
-        break if topic.research_articles.where(new: true).length > 10
+        articles = topic.process_next_ten_articles(search_terms, page)
+        break if topic.research_articles.where(new: true).length > 10 || articles.length < 10
         page += 1
       end
       topic.ensure_only_ten_new_articles

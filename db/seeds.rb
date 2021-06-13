@@ -9,4 +9,9 @@ ai = ResearchTopic.create(title: "Artificial Intelligence")
 SearchTerm.create(research_topic_id: ai.id, term: "artificial intelligence")
 SearchTerm.create(research_topic_id: ai.id, term: "machine learning")
 
+synthetic_biology = ResearchTopic.create(title: "Synthetic Biology")
+SearchTerm.create(research_topic_id: synthetic_biology.id, term: "synthetic biology")
 
+jellyfish = ResearchTopic.create(title: "Immortal Jellyfish")
+SearchTerm.create(research_topic_id: jellyfish.id, term: "immortal jellyfish")
+SearchTerm.create(research_topic_id: jellyfish.id, term: "turritopsis dohrnii")
