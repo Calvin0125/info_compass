@@ -19,25 +19,55 @@
               %button.accordion-button.collapsed{type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-articlesCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-articlesCollapse" } }= "Articles"
             .collapse.accordion-collapse{ id: "topic-#{topic_number}-articlesCollapse", aria: { labelledby: "topic-#{topic_number}-articles" } }
               .accordion-body
-              - if topic.research_articles.length == 0
-                %p= "There were no articles found for your search"
-              - else
-                .accordion{ id: "topic-#{topic_number}-newAccordion" }
-                  .accordion-item
-                    %h2.accordion-header{ id: "topic-#{topic_number}-new" }
-                      %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-newArticlesCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-newArticlesCollapse" } }= "New"
-                    .collapse.accordion-collapse{ id: "topic-#{topic_number}-newArticlesCollapse" , aria: { labelledby: "topic-#{topic_number}-new" } }
-                      .accordion-body
-                        %p= "New articles go here!"
-                .accordion{ id: "topic-#{topic_number}-savedAccordion" }
-                  .accordion-item
-                    %h2.accordion-header{ id: "topic-#{topic_number}-saved" }
-                      %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-savedArticlesCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-savedArticlesCollapse" } }= "Saved"
-                    .collapse.accordion-collapse{ id: "topic-#{topic_number}-savedArticlesCollapse", aria: { labelledby: "topic-#{topic_number}-saved" } }
-                .accordion{ id: "topic-#{topic_number}-readAccordion" }
-                  .accordion-item
-                    %h2.accordion-header{ id: "topic-#{topic_number}-read" }
-                      %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-readArticlesCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-readArticlesCollapse" } }= "Read"
-                    .collapse.accordion-collapse{ id: "topic-#{topic_number}-readArticlesCollapse", aria: { labelledby: "topic-#{topic_number}-read" } }
-                      .accordion-body
-                        %p= "Read articles go here!"
+                - if topic.research_articles.length == 0
+                  %p= "There were no articles found for your search"
+                - else
+                  .accordion{ id: "topic-#{topic_number}-articlesAccordion" }
+                    .accordion-item
+                      %h2.accordion-header{ id: "topic-#{topic_number}-new" }
+                        %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-newArticlesCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-newArticlesCollapse" } }= "New"
+                      .collapse.accordion-collapse{ id: "topic-#{topic_number}-newArticlesCollapse" , aria: { labelledby: "topic-#{topic_number}-new" } }
+                        .accordion-body
+                          .accordion{ id: "topic-#{topic_number}-newAccordion" }
+                            - topic.research_articles.where(new: true).each.with_index do |article, article_number|
+                              .accordion-item
+                                %h2.accordion-header{ id: "topic-#{topic_number}-newArticle-#{article_number}" }
+                                  %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-newArticle-#{article_number}-collapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-newArticle-#{article_number}-collapse" } }= article.title
+                                .collapse.accordion-collapse{ id: "topic-#{topic_number}-newArticle-#{article_number}-collapse", aria: { labelledby: "topic-#{topic_number}-newArticle-#{article_number}" } }
+                                  .accordion-body
+                                    .accordion{ id: "topic-#{topic_number}-newArticle-#{article_number}-accordion" }
+                                      .accordion-item
+                                        %h2.accordion-header{ id: "topic-#{topic_number}-newArticle-#{article_number}-summary" }
+                                          %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-newArticle-#{article_number}-summaryCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-newArticle-#{article_number}-summaryCollapse" } }= "Summary"
+                                        .collapse.accordion-collapse{ id: "topic-#{topic_number}-newArticle-#{article_number}-summaryCollapse", aria: { labelledby: "topic-#{topic_number}-newArticle-#{article_number}-summary" } }
+                                          .accordion-body
+                                            %p= article.summary
+                                            %a{ href: article.id }= "Read Full Article"
+                                      .accordion-item
+                                        %h2.accordion-header{ id: "topic-#{topic_number}-newArticle-#{article_number}-notes" }
+                                          %button.accordion-button.collapsed{type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-newArticle-#{article_number}-notesCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-newArticle-#{article_number}-notesCollapse" } }= "Notes"
+                                        .collapse.accordion-collapse{ id: "topic-#{topic_number}-newArticle-#{article_number}-notesCollapse", aria: { labelledby: "topic-#{topic_number}-newArticle-#{article_number}-notes" } }
+                                          .accordion-body
+                                            %p= "A text box to record notes will go here"
+                                      .accordion-item
+                                        %h2.accordion-header{ id: "topic-#{topic_number}-newArticle-#{article_number}-actions" }
+                                          %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-newArticle-#{article_number}-actionsCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-newArticle-#{article_number}-actionsCollapse" } }= "Actions"
+                                        .collapse.accordion-collapse{ id: "topic-#{topic_number}-newArticle-#{article_number}-actionsCollapse", aria: { labelledby: "topic-#{topic_number}-newArticle-#{article_number}-actions" } }
+                                          .accordion-body
+                                            %p= "Buttons will go here to mark as read, save for later, and mark not interested"
+                    .accordion-item
+                      %h2.accordion-header{ id: "topic-#{topic_number}-saved" }
+                        %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-savedArticlesCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-savedArticlesCollapse" } }= "Saved"
+                      .collapse.accordion-collapse{ id: "topic-#{topic_number}-savedArticlesCollapse", aria: { labelledby: "topic-#{topic_number}-saved" } }
+                        .accordion-body
+                          %p= "Saved articles go here!"
+                          .accordion{ id: "topic-#{topic_number}-savedAccordion" }
+                            .accordion-item
+                    .accordion-item
+                      %h2.accordion-header{ id: "topic-#{topic_number}-read" }
+                        %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-readArticlesCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-readArticlesCollapse" } }= "Read"
+                      .collapse.accordion-collapse{ id: "topic-#{topic_number}-readArticlesCollapse", aria: { labelledby: "topic-#{topic_number}-read" } }
+                        .accordion-body
+                          %p= "Read articles go here!"
+                          .accordion{ id: "topic-#{topic_number}-readAccordion" }
+                            .accordion-item
