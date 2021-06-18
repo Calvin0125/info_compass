@@ -1,0 +1,14 @@
+.container.mt-4
+  .row
+    .col-md-5
+      = form_tag '/new_user' do
+        .mb-3
+          %label.form-label(for="email")= "Email"
+          %input.form-control#email(type="email")
+        .mb-3
+          %label.form-label(for="username")= "Username"
+          %input.form-control#username
+        .mb-3
+          %label.form-label(for="password")= "Password"
+          %input.form-control#password(type="password")
+        %button.btn.btn-primary(type="submit")= "Create Account"
