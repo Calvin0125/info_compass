@@ -1,14 +1,14 @@
 .container.mt-4
   .row
     .col-md-5
-      = form_tag '/new_user' do
+      = form_for @user do |f|
         .mb-3
-          %label.form-label(for="email")= "Email"
-          %input.form-control#email(type="email")
+          = f.label :email, "Email", class: "form-label"
+          = f.text_field :email, class: "form-control", type: "email"
         .mb-3
-          %label.form-label(for="username")= "Username"
-          %input.form-control#username
+          = f.label :username, "Username", class: "form-label"
+          = f.text_field :username, class: "form-control"
         .mb-3
-          %label.form-label(for="password")= "Password"
-          %input.form-control#password(type="password")
-        %button.btn.btn-primary(type="submit")= "Create Account"
+          = f.label :password, "Password", class: "form-label"
+          = f.text_field :password, class: "form-control", type: "password"
+        = f.submit "Create Account", class: "btn btn-primary"
