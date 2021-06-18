@@ -47,12 +47,12 @@ describe SessionsController do
 
       context "invalid input" do
         it "sets the flash notice" do
-          post :create, params: { username: @user.username, password: "wrong" }
+          post :create, params: { username: "nobody", password: "wrong" }
           expect(flash[:danger]).to eq("Invalid username or password")
         end
 
         it "redirects to login page" do
-          post :create, params: { username: @user.username, password: "wrong" }
+          post :create, params: { username: "nobody", password: "wrong" }
           expect(response).to redirect_to login_path
         end
       end
@@ -70,6 +70,11 @@ describe SessionsController do
       it "sets the flash notice" do
         delete :destroy
         expect(flash[:success]).to eq("You have been logged out.")
+      end
+
+      it "redirects to login path" do
+        delete :destroy
+        expect(response).to redirect_to login_path
       end
     end
 

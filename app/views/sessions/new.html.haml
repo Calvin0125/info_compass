@@ -4,8 +4,8 @@
       = form_tag '/login' do
         .mb-3
           %label.form-label(for="username")= "Username"
-          %input.form-control#username
+          %input.form-control#username(name="username")
         .mb-3
           %label.form-label(for="password")= "Password"
-          %input.form-control#password(type="password")
+          %input.form-control#password(type="password" name="password")
         %button.btn.btn-primary(type="submit")= "Login"

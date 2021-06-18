@@ -6,12 +6,12 @@
     .collapse.navbar-collapse#navbarContent
       %ul.navbar-nav
         %li.nav-item.dropdown.me-4
-          %a.nav-link.dropdown-toggle#accountDropdownLink(href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false")= "Welcome, Calvin"
+          %a.nav-link.dropdown-toggle#accountDropdownLink(href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false")= "Welcome, #{current_user.username}"
           %ul.dropdown-menu.dropdown-menu-dark(aria-labelledby="accountDropdownLink")
             %li
-              = link_to("My Account", users_path(1), class: "dropdown-item")
+              = link_to("My Account", my_account_path, class: "dropdown-item")
             %li
-              = link_to("Sign Out", users_path(1), method: :delete, class: "dropdown-item")
+              = link_to("Sign Out", logout_path, method: :delete, class: "dropdown-item")
         %li.nav-item
           = link_to "Research Topics", research_topics_path, class: "nav-link"
         %li.nav-item
