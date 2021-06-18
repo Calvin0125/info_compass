@@ -13,6 +13,16 @@
 # it.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+
+# Helper methods to be available for all specs
+def login(user = Fabricate(:user))
+  session[:user_id] = user.id
+end
+
+def current_user
+  User.find(session[:user_id]) if session[:user_id]
+end
+
 require 'vcr'
 
 VCR.configure do |c|
