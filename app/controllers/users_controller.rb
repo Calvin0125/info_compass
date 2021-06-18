@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :require_no_login, only: :new
+  before_action :require_no_login, only: [:new, :create]
   before_action :require_login, only: :show
 
   def new

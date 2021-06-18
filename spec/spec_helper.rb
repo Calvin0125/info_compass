@@ -14,15 +14,6 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
-# Helper methods to be available for all specs
-def login(user = Fabricate(:user))
-  session[:user_id] = user.id
-end
-
-def current_user
-  User.find(session[:user_id]) if session[:user_id]
-end
-
 require 'vcr'
 
 VCR.configure do |c|
@@ -31,6 +22,9 @@ VCR.configure do |c|
   c.configure_rspec_metadata!
   c.allow_http_connections_when_no_cassette = true
 end
+
+# autoload support files
+Dir["./spec/support/**/*.rb"].each { |f| require f }
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate

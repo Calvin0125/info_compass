@@ -10,16 +10,8 @@ describe UsersController do
     end
 
     context "user logged in" do
-      it "redirects to users account" do
-        login
-        get :new
-        expect(response).to redirect_to(my_account_path)
-      end
-
-      it "sets the flash notice" do
-        login
-        get :new
-        expect(flash[:warning]).to eq("You are already logged in.")
+      it_behaves_like "a page that requires no login" do
+        let(:action) { get :new }
       end
     end
   end
@@ -61,16 +53,8 @@ describe UsersController do
     end
 
     context "user logged in" do
-      it "redirects to users account" do
-        login
-        get :new
-        expect(response).to redirect_to(my_account_path)
-      end
-
-      it "sets the flash notice" do
-        login
-        get :new
-        expect(flash[:warning]).to eq("You are already logged in.")
+      it_behaves_like "a page that requires no login" do
+        let(:action) { post :create }
       end
     end
   end
