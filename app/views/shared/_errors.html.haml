@@ -1,0 +1,6 @@
+- if resource.errors.full_messages.length > 0
+  .alert.alert-danger
+    %p= "Please fix the following errors:"
+    %ul
+    - resource.errors.full_messages.each do |msg|
+      %li= msg
