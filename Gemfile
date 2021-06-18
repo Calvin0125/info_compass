@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.5'
 
+gem 'bcrypt'
 gem 'pg'
 gem 'faker'
 gem 'fabrication'

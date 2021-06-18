@@ -3,6 +3,7 @@ class ResearchTopic < ActiveRecord::Base
 
   has_many :research_articles
   has_many :search_terms
+  belongs_to :user
 
   validates_presence_of :title
   validates_uniqueness_of :title
