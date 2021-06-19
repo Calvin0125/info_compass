@@ -17,3 +17,12 @@ jellyfish = ResearchTopic.create(title: "Immortal Jellyfish", user_id: calvin.id
 SearchTerm.create(research_topic_id: jellyfish.id, term: "immortal jellyfish")
 SearchTerm.create(research_topic_id: jellyfish.id, term: "turritopsis dohrnii")
 
+ResearchTopic.add_new_articles
+
+ai.research_articles.order(id: :asc).limit(3).each { |article| article.update(status: "read") }
+ai.research_articles.order(id: :desc).limit(3).each { |article| article.update(status: "saved") }
+
+synthetic_biology.research_articles.order(id: :asc).limit(3).each { |article| article.update(status: "read") }
+synthetic_biology.research_articles.order(id: :desc).limit(3).each { |article| article.update(status: "saved") }
+
+ResearchTopic.add_new_articles
