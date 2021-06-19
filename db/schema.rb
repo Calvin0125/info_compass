@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_17_212412) do
+ActiveRecord::Schema.define(version: 2021_06_19_013341) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,12 +24,10 @@ ActiveRecord::Schema.define(version: 2021_06_17_212412) do
     t.string "research_topic_id"
     t.date "article_published"
     t.date "article_updated"
-    t.boolean "new"
-    t.boolean "saved"
-    t.boolean "read"
-    t.boolean "not_interested"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "notes"
+    t.string "status"
   end
 
   create_table "research_topics", force: :cascade do |t|

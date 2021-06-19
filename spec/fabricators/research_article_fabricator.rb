@@ -10,8 +10,5 @@ Fabricator(:research_article) do
   article_published { "2021-05-31" }
   article_updated { "2021-06-04" }
   research_topic_id { 1 }
-  new { true }
-  saved { false }
-  read { false }
-  not_interested { false }
+  status { "new" }
 end

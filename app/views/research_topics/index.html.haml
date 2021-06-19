@@ -29,7 +29,7 @@
                       .collapse.accordion-collapse{ id: "topic-#{topic_number}-newArticlesCollapse" , aria: { labelledby: "topic-#{topic_number}-new" } }
                         .accordion-body
                           .accordion{ id: "topic-#{topic_number}-newAccordion" }
-                            - topic.research_articles.where(new: true).each.with_index do |article, article_number|
+                            - topic.research_articles.where(status: "new").each.with_index do |article, article_number|
                               .accordion-item
                                 %h2.accordion-header{ id: "topic-#{topic_number}-newArticle-#{article_number}" }
                                   %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-newArticle-#{article_number}-collapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-newArticle-#{article_number}-collapse" } }= article.title
@@ -48,20 +48,27 @@
                                           %button.accordion-button.collapsed{type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-newArticle-#{article_number}-notesCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-newArticle-#{article_number}-notesCollapse" } }= "Notes"
                                         .collapse.accordion-collapse{ id: "topic-#{topic_number}-newArticle-#{article_number}-notesCollapse", aria: { labelledby: "topic-#{topic_number}-newArticle-#{article_number}-notes" } }
                                           .accordion-body
-                                            %p= "A text box to record notes will go here"
+                                            = form_for(article) do |f|
+                                              .mb-3
+                                                = f.text_area :notes, class: "form-control", rows: "10"
+                                              = f.submit "Save", class: "btn btn-primary"
                                       .accordion-item
-                                        %h2.accordion-header{ id: "topic-#{topic_number}-newArticle-#{article_number}-actions" }
-                                          %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-newArticle-#{article_number}-actionsCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-newArticle-#{article_number}-actionsCollapse" } }= "Actions"
-                                        .collapse.accordion-collapse{ id: "topic-#{topic_number}-newArticle-#{article_number}-actionsCollapse", aria: { labelledby: "topic-#{topic_number}-newArticle-#{article_number}-actions" } }
+                                        %h2.accordion-header{ id: "topic-#{topic_number}-newArticle-#{article_number}-status" }
+                                          %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-newArticle-#{article_number}-statusCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-newArticle-#{article_number}-actionsCollapse" } }= "Actions"
+                                        .collapse.accordion-collapse{ id: "topic-#{topic_number}-newArticle-#{article_number}-statusCollapse", aria: { labelledby: "topic-#{topic_number}-newArticle-#{article_number}-actions" } }
                                           .accordion-body
-                                            %p= "Buttons will go here to mark as read, save for later, and mark not interested"
+                                            = form_for(article) do |f|
+                                              .mb-3
+                                                = f.label :status
+                                                = f.select :status, [["New", { selected: true, disabled: true}], "Saved", "Read", "Not Interested"], class: "form-select"
+                                              = f.submit "Update", class: "btn btn-primary"
                     .accordion-item
                       %h2.accordion-header{ id: "topic-#{topic_number}-saved" }
                         %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-savedArticlesCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-savedArticlesCollapse" } }= "Saved"
                       .collapse.accordion-collapse{ id: "topic-#{topic_number}-savedArticlesCollapse", aria: { labelledby: "topic-#{topic_number}-saved" } }
                         .accordion-body
                           .accordion{ id: "topic-#{topic_number}-savedAccordion" }
-                            - topic.research_articles.where(saved: true).each.with_index do |article, article_number|
+                            - topic.research_articles.where(status: "saved").each.with_index do |article, article_number|
                               .accordion-item
                                 %h2.accordion-header{ id: "topic-#{topic_number}-savedArticle-#{article_number}" }
                                   %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-savedArticle-#{article_number}-collapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-savedArticle-#{article_number}-collapse" } }= article.title
@@ -82,9 +89,9 @@
                                           .accordion-body
                                             %p= "A text box to record notes will go here"
                                       .accordion-item
-                                        %h2.accordion-header{ id: "topic-#{topic_number}-savedArticle-#{article_number}-actions" }
-                                          %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-savedArticle-#{article_number}-actionsCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-savedArticle-#{article_number}-actionsCollapse" } }= "Actions"
-                                        .collapse.accordion-collapse{ id: "topic-#{topic_number}-savedArticle-#{article_number}-actionsCollapse", aria: { labelledby: "topic-#{topic_number}-savedArticle-#{article_number}-actions" } }
+                                        %h2.accordion-header{ id: "topic-#{topic_number}-savedArticle-#{article_number}-status" }
+                                          %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-savedArticle-#{article_number}-statusCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-savedArticle-#{article_number}-actionsCollapse" } }= "Actions"
+                                        .collapse.accordion-collapse{ id: "topic-#{topic_number}-savedArticle-#{article_number}-statusCollapse", aria: { labelledby: "topic-#{topic_number}-savedArticle-#{article_number}-actions" } }
                                           .accordion-body
                                             %p= "Buttons will go here to mark as read, save for later, and mark not interested"
                     .accordion-item
@@ -93,7 +100,7 @@
                       .collapse.accordion-collapse{ id: "topic-#{topic_number}-readArticlesCollapse", aria: { labelledby: "topic-#{topic_number}-read" } }
                         .accordion-body
                           .accordion{ id: "topic-#{topic_number}-readAccordion" }
-                            - topic.research_articles.where(read: true).each.with_index do |article, article_number|
+                            - topic.research_articles.where(status: "read").each.with_index do |article, article_number|
                               .accordion-item
                                 %h2.accordion-header{ id: "topic-#{topic_number}-readArticle-#{article_number}" }
                                   %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-readArticle-#{article_number}-collapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-readArticle-#{article_number}-collapse" } }= article.title
@@ -114,8 +121,8 @@
                                           .accordion-body
                                             %p= "A text box to record notes will go here"
                                       .accordion-item
-                                        %h2.accordion-header{ id: "topic-#{topic_number}-readArticle-#{article_number}-actions" }
-                                          %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-readArticle-#{article_number}-actionsCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-readArticle-#{article_number}-actionsCollapse" } }= "Actions"
-                                        .collapse.accordion-collapse{ id: "topic-#{topic_number}-readArticle-#{article_number}-actionsCollapse", aria: { labelledby: "topic-#{topic_number}-readArticle-#{article_number}-actions" } }
+                                        %h2.accordion-header{ id: "topic-#{topic_number}-readArticle-#{article_number}-status" }
+                                          %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-readArticle-#{article_number}-statusCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-readArticle-#{article_number}-statusCollapse" } }= "Actions"
+                                        .collapse.accordion-collapse{ id: "topic-#{topic_number}-readArticle-#{article_number}-statusCollapse", aria: { labelledby: "topic-#{topic_number}-readArticle-#{article_number}-actions" } }
                                           .accordion-body
                                             %p= "Buttons will go here to mark as read, save for later, and mark not interested"

@@ -47,9 +47,9 @@ describe ResearchTopic do
     it "will request multiple pages until there are 10 new articles" do
       topic = Fabricate(:research_topic, user_id: Fabricate(:user).id)
       Fabricate(:research_article, research_topic_id: topic.id, api: 'arxiv', 
-      api_id: 'http://arxiv.org/abs/2106.05259v1', new: false, read: true)
+      api_id: 'http://arxiv.org/abs/2106.05259v1', status: "read")
       Fabricate(:research_article, research_topic_id: topic.id, api: 'arxiv',
-      api_id: 'http://arxiv.org/abs/2106.05228v1', new: false, read: true, id: 2)
+      api_id: 'http://arxiv.org/abs/2106.05228v1', status: "read", id: 2)
       Fabricate(:search_term, research_topic_id: topic.id, term: "black holes")
       ResearchTopic.add_new_articles
       expect(ResearchArticle.count).to eq(12)
@@ -59,7 +59,7 @@ describe ResearchTopic do
       topic = Fabricate(:research_topic, user_id: Fabricate(:user).id)
       api_id = 'http://arxiv.org/abs/2106.05259v1'
       Fabricate(:research_article, research_topic_id: topic.id, api: 'arxiv', 
-      api_id: api_id, new: false, read: true)
+      api_id: api_id, status: "read")
       Fabricate(:search_term, research_topic_id: topic.id, term: "black holes")
       ResearchTopic.add_new_articles
       expect(topic.research_articles.where(api: 'arxiv', api_id: api_id).length).to eq(1) 

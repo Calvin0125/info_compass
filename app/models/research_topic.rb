@@ -19,7 +19,7 @@ class ResearchTopic < ActiveRecord::Base
       # to find 10 the user hasn't seen before
       loop do
         articles = topic.process_next_ten_articles(search_terms, page)
-        break if topic.research_articles.where(new: true).length > 10 || articles.length < 10
+        break if topic.research_articles.where(status: "new").length > 10 || articles.length < 10
         page += 1
       end
       topic.ensure_only_ten_new_articles
@@ -37,8 +37,8 @@ class ResearchTopic < ActiveRecord::Base
   end
 
   def ensure_only_ten_new_articles
-    while self.research_articles.where(new: true).length > 10
-      self.research_articles.where(new: true).order(article_published: :asc).first.destroy
+    while self.research_articles.where(status: "new").length > 10
+      self.research_articles.where(status: "new").order(article_published: :asc).first.destroy
     end
   end
 end
