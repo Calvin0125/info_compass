@@ -1,7 +1,7 @@
 %nav.navbar.navbar-expand-sm.navbar-dark.bg-dark
   %a.navbar-brand.ms-3(href="#") InfoCompass
   - if logged_in?
-    %button.navbar-toggler(type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation")
+    %button.navbar-toggler#navbarToggler(type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation")
       %span.navbar-toggler-icon
     .collapse.navbar-collapse#navbarContent
       %ul.navbar-nav

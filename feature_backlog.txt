@@ -1,4 +1,7 @@
 User Features
   1. Add reset password feature
   2. Show, edit, and update account
+  3. Change session#destroy to redirect to root_path
 
+Misc
+  1. Design root page
