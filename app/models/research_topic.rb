@@ -7,7 +7,7 @@ class ResearchTopic < ActiveRecord::Base
 
   validates_presence_of :title
   validates_uniqueness_of :title
-  
+
   def self.add_new_articles
     self.all.each do |topic|
       search_terms = topic.search_terms.map(&:term)
@@ -40,5 +40,9 @@ class ResearchTopic < ActiveRecord::Base
     while self.research_articles.where(status: "new").length > 10
       self.research_articles.where(status: "new").order(article_published: :asc).first.destroy
     end
+  end
+
+  def new_today_count
+    return self.research_articles.where(article_published: Date.yesterday.strftime("%F")).length
   end
 end

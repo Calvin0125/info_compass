@@ -65,4 +65,15 @@ describe ResearchTopic do
       expect(topic.research_articles.where(api: 'arxiv', api_id: api_id).length).to eq(1) 
     end
   end
+
+  describe "#new_today_count" do
+    it "returns the number of articles that are new today" do
+      user = Fabricate(:user)
+      topic = Fabricate(:research_topic, user_id: user.id)
+      article1 = Fabricate(:research_article, research_topic_id: topic.id, article_published: Date.yesterday.strftime("%F"))
+      article2 = Fabricate(:research_article, research_topic_id: topic.id, article_published: Date.yesterday.strftime("%F"), id: 2)
+      article3 = Fabricate(:research_article, research_topic_id: topic.id, article_published: '2021-01-01', id: 3) 
+      expect(topic.new_today_count).to eq(2)
+    end
+  end
 end

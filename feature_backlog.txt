@@ -5,3 +5,4 @@ User Features
 
 Misc
   1. Design root page
+  2. FAQ modal
