@@ -6,3 +6,4 @@ User Features
 Misc
   1. Design root page
   2. FAQ modal
+  3. Update tests using VCR to re-record from the API once per week.

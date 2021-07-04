@@ -71,7 +71,7 @@
                                             = form_for(article) do |f|
                                               .mb-3
                                                 = f.label :status
-                                                = f.select :status, [["New", { selected: true, disabled: true}], "Saved", "Read", "Not Interested"], class: "form-select"
+                                                = f.select :status, [["New", "new", { selected: true, disabled: true}], ["Saved", "saved"], ["Read", "read"], ["Not Interested", "not interested"]], class: "form-select"
                                               = f.submit "Update", class: "btn btn-primary"
                     .accordion-item
                       %h2.accordion-header{ id: "topic-#{topic_number}-saved" }
@@ -115,7 +115,7 @@
                                             = form_for(article) do |f|
                                               .mb-3
                                                 = f.label :status
-                                                = f.select :status, [["Saved", { selected: true }], "Read", "Not Interested"], class: "form-select"
+                                                = f.select :status, [["Saved", "saved", { selected: true }], ["Read", "read"], ["Not Interested", "not interested"]], class: "form-select"
                                               = f.submit "Update", class: "btn btn-primary"
                     .accordion-item
                       %h2.accordion-header{ id: "topic-#{topic_number}-read" }
@@ -159,6 +159,6 @@
                                             = form_for(article) do |f|
                                               .mb-3
                                                 = f.label :status
-                                                = f.select :status, ["Saved", ["Read", { selected: true }], "Not Interested"], class: "form-select"
+                                                = f.select :status, [["Saved", "saved"], ["Read", "read", { selected: true }], ["Not Interested", "not interested"]], class: "form-select"
                                               = f.submit "Update", class: "btn btn-primary"
                                          
