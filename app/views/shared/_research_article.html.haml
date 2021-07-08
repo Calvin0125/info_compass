@@ -1,13 +1,25 @@
 %h2= "Summary"
 %p= article.summary
-%a.btn.btn-primary{ href: article.api_id, role: "button"}= "Read Full Article"
 = form_for(article) do |f|
   .mb-3
     = f.text_area :notes, class: "form-control", rows: "10"
-  = f.submit "Save", class: "btn btn-primary"
-= form_for(article) do |f|
-  .mb-3
-    = f.label :status
-    = f.select :status, [["New", "new", { selected: true, disabled: true}], ["Saved", "saved"], ["Read", "read"], ["Not Interested", "not interested"]], class: "form-select"
-  = f.submit "Update", class: "btn btn-primary"
-
+.row.gy-3
+  .col-auto
+    %button.btn.btn-primary{ form: "edit_research_article_#{article.id}" }= "Save Notes"
+  - if article.status == "new"
+    .col-auto
+      = form_for(article) do |f|
+        = f.hidden_field(:status, value: "saved")
+        = f.submit "Save For Later", class: "btn btn-primary"
+  - if article.status == "new" || article.status == "saved"
+    .col-auto
+      = form_for(article) do |f|
+        = f.hidden_field(:status, value: "read")
+        = f.submit "Mark As Read", class: "btn btn-primary"
+  - if article.status == "read"
+    .col-auto
+      = form_for(article) do |f|
+        = f.hidden_field(:status, value: "saved")
+        = f.submit "Mark Unread", class: "btn btn-primary"
+  .col-auto
+    %a.btn.btn-primary{ href: article.api_id, role: "button"}= "Read Full Article"

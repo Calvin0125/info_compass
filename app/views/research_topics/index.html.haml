@@ -14,60 +14,63 @@
                 %button.btn-close(type="button" aria-label="Close")
           .col-auto
             %button.btn.btn-success= "Add New"
-    .accordion.my-3{ id: "topic-#{topic_number}-articlesAccordion" }
-      .accordion-item
-        %h2.accordion-header{ id: "topic-#{topic_number}-new" }
-          %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-newArticlesCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-newArticlesCollapse" } }
-            = "New"
-            %span.badge.bg-primary.ms-3= topic.research_articles.where(status: "new").length 
-            - if topic.new_today_count > 0
-              %span.ms-3.text-success= "#{topic.new_today_count} New Today"
-        .collapse.accordion-collapse{ id: "topic-#{topic_number}-newArticlesCollapse" , aria: { labelledby: "topic-#{topic_number}-new" } }
-          .accordion-body
-            .accordion{ id: "topic-#{topic_number}-newAccordion" }
-              - topic.research_articles.where(status: "new").each.with_index do |article, article_number|
-                .accordion-item
-                  %h2.accordion-header{ id: "topic-#{topic_number}-newArticle-#{article_number}" }
-                    %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-newArticle-#{article_number}-collapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-newArticle-#{article_number}-collapse" } }
-                      .container
-                        .row= article.title
-                        .row.mt-3.text-muted= article.article_published
-                  .collapse.accordion-collapse{ id: "topic-#{topic_number}-newArticle-#{article_number}-collapse", aria: { labelledby: "topic-#{topic_number}-newArticle-#{article_number}" } }
-                    .accordion-body
-                      = render 'shared/research_article', article: article
-      .accordion-item
-        %h2.accordion-header{ id: "topic-#{topic_number}-saved" }
-          %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-savedArticlesCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-savedArticlesCollapse" } }
-            = "Saved"
-            %span.badge.bg-primary.ms-3= topic.research_articles.where(status: "saved").length 
-        .collapse.accordion-collapse{ id: "topic-#{topic_number}-savedArticlesCollapse", aria: { labelledby: "topic-#{topic_number}-saved" } }
-          .accordion-body
-            .accordion{ id: "topic-#{topic_number}-savedAccordion" }
-              - topic.research_articles.where(status: "saved").each.with_index do |article, article_number|
-                .accordion-item
-                  %h2.accordion-header{ id: "topic-#{topic_number}-savedArticle-#{article_number}" }
-                    %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-savedArticle-#{article_number}-collapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-savedArticle-#{article_number}-collapse" } }
-                      .container
-                        .row= article.title
-                        .row.mt-3.text-muted= article.article_published
-                  .collapse.accordion-collapse{ id: "topic-#{topic_number}-savedArticle-#{article_number}-collapse", aria: { labelledby: "topic-#{topic_number}-savedArticle-#{article_number}" } }
-                    .accordion-body
-                      = render 'shared/research_article', article: article
-      .accordion-item
-        %h2.accordion-header{ id: "topic-#{topic_number}-read" }
-          %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-readArticlesCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-readArticlesCollapse" } }
-            = "Read"
-            %span.ms-3.badge.bg-primary= topic.research_articles.where(status: "read").length  
-        .collapse.accordion-collapse{ id: "topic-#{topic_number}-readArticlesCollapse", aria: { labelledby: "topic-#{topic_number}-read" } }
-          .accordion-body
-            .accordion{ id: "topic-#{topic_number}-readAccordion" }
-              - topic.research_articles.where(status: "read").each.with_index do |article, article_number|
-                .accordion-item
-                  %h2.accordion-header{ id: "topic-#{topic_number}-readArticle-#{article_number}" }
-                    %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-readArticle-#{article_number}-collapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-readArticle-#{article_number}-collapse" } }
-                      .container
-                        .row= article.title
-                        .row.mt-3.text-muted= article.article_published
-                  .collapse.accordion-collapse{ id: "topic-#{topic_number}-readArticle-#{article_number}-collapse", aria: { labelledby: "topic-#{topic_number}-readArticle-#{article_number}" } }
-                    .accordion-body
-                      = render 'shared/research_article', article: article
+    - if topic.research_articles.length == 0
+      %h4= "There were no articles found for your search."
+    - else
+      .accordion.my-3{ id: "topic-#{topic_number}-articlesAccordion" }
+        .accordion-item
+          %h2.accordion-header{ id: "topic-#{topic_number}-new" }
+            %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-newArticlesCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-newArticlesCollapse" } }
+              = "New"
+              %span.badge.bg-primary.ms-3= topic.research_articles.where(status: "new").length 
+              - if topic.new_today_count > 0
+                %span.ms-3.text-success= "#{topic.new_today_count} New Today"
+          .collapse.accordion-collapse{ id: "topic-#{topic_number}-newArticlesCollapse" , aria: { labelledby: "topic-#{topic_number}-new" } }
+            .accordion-body
+              .accordion{ id: "topic-#{topic_number}-newAccordion" }
+                - topic.research_articles.where(status: "new").each.with_index do |article, article_number|
+                  .accordion-item
+                    %h2.accordion-header{ id: "topic-#{topic_number}-newArticle-#{article_number}" }
+                      %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-newArticle-#{article_number}-collapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-newArticle-#{article_number}-collapse" } }
+                        .container
+                          .row= article.title
+                          .row.mt-3.text-muted= article.article_published
+                    .collapse.accordion-collapse{ id: "topic-#{topic_number}-newArticle-#{article_number}-collapse", aria: { labelledby: "topic-#{topic_number}-newArticle-#{article_number}" } }
+                      .accordion-body
+                        = render 'shared/research_article', article: article
+        .accordion-item
+          %h2.accordion-header{ id: "topic-#{topic_number}-saved" }
+            %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-savedArticlesCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-savedArticlesCollapse" } }
+              = "Saved"
+              %span.badge.bg-primary.ms-3= topic.research_articles.where(status: "saved").length 
+          .collapse.accordion-collapse{ id: "topic-#{topic_number}-savedArticlesCollapse", aria: { labelledby: "topic-#{topic_number}-saved" } }
+            .accordion-body
+              .accordion{ id: "topic-#{topic_number}-savedAccordion" }
+                - topic.research_articles.where(status: "saved").each.with_index do |article, article_number|
+                  .accordion-item
+                    %h2.accordion-header{ id: "topic-#{topic_number}-savedArticle-#{article_number}" }
+                      %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-savedArticle-#{article_number}-collapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-savedArticle-#{article_number}-collapse" } }
+                        .container
+                          .row= article.title
+                          .row.mt-3.text-muted= article.article_published
+                    .collapse.accordion-collapse{ id: "topic-#{topic_number}-savedArticle-#{article_number}-collapse", aria: { labelledby: "topic-#{topic_number}-savedArticle-#{article_number}" } }
+                      .accordion-body
+                        = render 'shared/research_article', article: article
+        .accordion-item
+          %h2.accordion-header{ id: "topic-#{topic_number}-read" }
+            %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-readArticlesCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-readArticlesCollapse" } }
+              = "Read"
+              %span.ms-3.badge.bg-primary= topic.research_articles.where(status: "read").length  
+          .collapse.accordion-collapse{ id: "topic-#{topic_number}-readArticlesCollapse", aria: { labelledby: "topic-#{topic_number}-read" } }
+            .accordion-body
+              .accordion{ id: "topic-#{topic_number}-readAccordion" }
+                - topic.research_articles.where(status: "read").each.with_index do |article, article_number|
+                  .accordion-item
+                    %h2.accordion-header{ id: "topic-#{topic_number}-readArticle-#{article_number}" }
+                      %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-readArticle-#{article_number}-collapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-readArticle-#{article_number}-collapse" } }
+                        .container
+                          .row= article.title
+                          .row.mt-3.text-muted= article.article_published
+                    .collapse.accordion-collapse{ id: "topic-#{topic_number}-readArticle-#{article_number}-collapse", aria: { labelledby: "topic-#{topic_number}-readArticle-#{article_number}" } }
+                      .accordion-body
+                        = render 'shared/research_article', article: article
