@@ -7,3 +7,6 @@ Misc
   1. Design root page
   2. FAQ modal
   3. Update tests using VCR to re-record from the API once per week.
+  4. Update front page to have better design
+  5. Make sure order of articles stays the same because it's annoying that it changes when you add notes. 
+  6. List when navbar is expanded on small screen needs a margin
