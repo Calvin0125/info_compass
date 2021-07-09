@@ -28,7 +28,9 @@
                 %span.ms-3.text-success= "#{topic.new_today_count} New Today"
           .collapse.accordion-collapse{ id: "topic-#{topic_number}-newArticlesCollapse" , aria: { labelledby: "topic-#{topic_number}-new" } }
             .accordion-body
-              .accordion.bg-light{ id: "topic-#{topic_number}-newAccordion" }
+              .accordion{ id: "topic-#{topic_number}-newAccordion" }
+                - if topic.research_articles.where(status: "new").length == 0
+                  %p= "It looks like there aren't any articles you haven't seen before. Try adding a new search term for more results."
                 - topic.research_articles.where(status: "new").each.with_index do |article, article_number|
                   .accordion-item
                     %h2.accordion-header{ id: "topic-#{topic_number}-newArticle-#{article_number}" }
