@@ -9,9 +9,10 @@
         .row.gy-2
           - topic.search_terms.each do |term|
             .col-auto
-              .btn-primary.btn
-                = term.term
-                %button.btn-close(type="button" aria-label="Close")
+              = form_for term, method: :delete  do |f|
+                .btn-primary.btn
+                  = term.term
+                  %button.btn-close(type="submit" aria-label="Close")
           .col-auto
             %button.btn.btn-dark= "Add New"
     - if topic.research_articles.length == 0
