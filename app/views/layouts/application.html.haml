@@ -7,7 +7,7 @@
     = csrf_meta_tag
     = stylesheet_link_tag "application", media: "all", "data-turblinks-track": "reload"
     = javascript_pack_tag "application"
-  %body
+  %body.bg-info
     = render "shared/navigation" 
     = render "shared/messages"
     = yield

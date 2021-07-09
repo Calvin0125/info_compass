@@ -1,4 +1,4 @@
-%h1.mx-auto.text-center= "Research Topics"
+%h1.mx-auto.text-center.mt-3= "Research Topics"
 .container-md.mx-auto.p-0
   - ResearchTopic.all.each.with_index do |topic, topic_number|
     %h2= topic.title
@@ -13,11 +13,11 @@
                 = term.term
                 %button.btn-close(type="button" aria-label="Close")
           .col-auto
-            %button.btn.btn-success= "Add New"
+            %button.btn.btn-dark= "Add New"
     - if topic.research_articles.length == 0
-      %h4= "There were no articles found for your search."
+      %h4.p-3.my-3.bg-secondary= "There were no articles found for your search."
     - else
-      .accordion.my-3{ id: "topic-#{topic_number}-articlesAccordion" }
+      .accordion.my-3.bg-light{ id: "topic-#{topic_number}-articlesAccordion" }
         .accordion-item
           %h2.accordion-header{ id: "topic-#{topic_number}-new" }
             %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-newArticlesCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-newArticlesCollapse" } }
@@ -27,7 +27,7 @@
                 %span.ms-3.text-success= "#{topic.new_today_count} New Today"
           .collapse.accordion-collapse{ id: "topic-#{topic_number}-newArticlesCollapse" , aria: { labelledby: "topic-#{topic_number}-new" } }
             .accordion-body
-              .accordion{ id: "topic-#{topic_number}-newAccordion" }
+              .accordion.bg-light{ id: "topic-#{topic_number}-newAccordion" }
                 - topic.research_articles.where(status: "new").each.with_index do |article, article_number|
                   .accordion-item
                     %h2.accordion-header{ id: "topic-#{topic_number}-newArticle-#{article_number}" }
@@ -45,7 +45,7 @@
               %span.badge.bg-primary.ms-3= topic.research_articles.where(status: "saved").length 
           .collapse.accordion-collapse{ id: "topic-#{topic_number}-savedArticlesCollapse", aria: { labelledby: "topic-#{topic_number}-saved" } }
             .accordion-body
-              .accordion{ id: "topic-#{topic_number}-savedAccordion" }
+              .accordion.bg-light{ id: "topic-#{topic_number}-savedAccordion" }
                 - topic.research_articles.where(status: "saved").each.with_index do |article, article_number|
                   .accordion-item
                     %h2.accordion-header{ id: "topic-#{topic_number}-savedArticle-#{article_number}" }
