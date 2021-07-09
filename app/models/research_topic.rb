@@ -10,20 +10,24 @@ class ResearchTopic < ActiveRecord::Base
 
   def self.add_new_articles
     self.all.each do |topic|
-      search_terms = topic.search_terms.map(&:term)
-      page = 0
-
-      # loop ensures that newly published articles always get added, but
-      # if there are not enough newly published articles to fill the 'new'
-      # section with 10 articles, it will look for older and older articles
-      # to find 10 the user hasn't seen before
-      loop do
-        articles = topic.process_next_ten_articles(search_terms, page)
-        break if topic.research_articles.where(status: "new").length > 10 || articles.length < 10
-        page += 1
-      end
-      topic.ensure_only_ten_new_articles
+      topic.add_new_articles
     end
+  end
+
+  def add_new_articles
+    search_terms = self.search_terms.map(&:term)
+    page = 0
+
+    # loop ensures that newly published articles always get added, but
+    # if there are not enough newly published articles to fill the 'new'
+    # section with 10 articles, it will look for older and older articles
+    # to find 10 the user hasn't seen before
+    loop do
+      articles = self.process_next_ten_articles(search_terms, page)
+      break if self.research_articles.where(status: "new").length > 10 || articles.length < 10
+      page += 1
+    end
+    self.ensure_only_ten_new_articles
   end
 
   def process_next_ten_articles(search_terms, page)
