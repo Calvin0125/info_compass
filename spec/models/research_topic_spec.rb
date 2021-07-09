@@ -18,6 +18,28 @@ describe ResearchTopic do
     end
   end
 
+  describe "#refresh_new_articles", :vcr do
+    it "removes all the articles currently in new" do
+      topic = Fabricate(:research_topic, user_id: Fabricate(:user).id)
+      Fabricate(:search_term, term: "crispr", research_topic_id: topic.id)
+      articles = []
+      5.times do |n| 
+        articles << Fabricate(:research_article, id: n, research_topic_id: topic.id)
+      end
+      topic.refresh_new_articles
+      new_articles = topic.research_articles.where(status: "new")
+      articles.each { |article| expect(new_articles).not_to include(article) }
+    end
+
+    it "adds 10 new articles" do
+      topic = Fabricate(:research_topic, user_id: Fabricate(:user).id) 
+      Fabricate(:search_term, term: "crispr", research_topic_id: topic.id)
+      5.times { |n| Fabricate(:research_article, id: n, research_topic_id: topic.id) }
+      topic.refresh_new_articles
+      expect(ResearchArticle.count).to eq(10)
+    end
+  end
+
   describe "::add_new_articles", :vcr do
     it "loads new articles in database" do
       topic = Fabricate(:research_topic, user_id: Fabricate(:user).id)

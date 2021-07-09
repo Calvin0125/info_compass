@@ -13,7 +13,14 @@ class ResearchTopic < ActiveRecord::Base
       topic.add_new_articles
     end
   end
-
+  
+  def refresh_new_articles
+    self.research_articles.where(status: "new").each do |article|
+      article.destroy
+    end
+    self.add_new_articles
+  end
+  
   def add_new_articles
     search_terms = self.search_terms.map(&:term)
     page = 0
