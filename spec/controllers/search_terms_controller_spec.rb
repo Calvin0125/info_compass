@@ -1,6 +1,50 @@
 require 'rails_helper.rb'
 
 describe SearchTermsController do
+  describe "POST create" do
+    it "creates the specified search term", :vcr do
+      user = Fabricate(:user)
+      login(user)
+      topic = Fabricate(:research_topic, user_id: user.id)
+      post :create, params: { search_term: { term: "crispr", research_topic_id: topic.id } }
+      expect(SearchTerm.count).to eq(1)
+    end
+
+    it "doesn't create the term if it is for a topic that doesn't belong to the logged in user", :vcr do
+      user1 = Fabricate(:user)
+      user2 = Fabricate(:user, id: 2)
+      login(user1)
+      topic = Fabricate(:research_topic, user_id: user2.id)
+      post :create, params: { search_term: { term: "crispr", research_topic_id: topic.id } }
+      expect(SearchTerm.count).to eq(0)
+    end
+    
+    it "sets the flash warning if user tries to add a term for a topic that isn't theirs", :vcr do
+      user1 = Fabricate(:user)
+      user2 = Fabricate(:user, id: 2)
+      login(user1)
+      topic = Fabricate(:research_topic, user_id: user2.id)
+      post :create, params: { search_term: { term: "crispr", research_topic_id: topic.id } }
+      expect(flash[:danger]).to eq("You can only add search terms to topics that belong to you.") 
+    end
+
+    it "redirects to research topics index", :vcr do
+      user = Fabricate(:user)
+      login(user)
+      topic = Fabricate(:research_topic, user_id: user.id)
+      post :create, params: { search_term: { term: "crispr", research_topic_id: topic.id } }
+      expect(response).to redirect_to research_topics_path
+    end
+    
+    it "refreshes new articles for the associated topic", :vcr do
+      user = Fabricate(:user)
+      login(user)
+      topic = Fabricate(:research_topic, user_id: user.id)
+      post :create, params: { search_term: { term: "crispr", research_topic_id: topic.id } }
+      expect(ResearchArticle.count).to eq(10)
+    end
+  end
+
   describe "DELETE destroy" do
     it "removes the specified search term", :vcr do
       user = Fabricate(:user)
@@ -40,7 +84,7 @@ describe SearchTermsController do
       expect(response).to redirect_to(research_topics_path)
     end
 
-    it "calls #refresh_new_articles on the associated topic", :vcr do
+    it "it refreshes new articles on the associated topic", :vcr do
       user = Fabricate(:user)
       login(user)
       topic = Fabricate(:research_topic, user_id: user.id, id: 1)
