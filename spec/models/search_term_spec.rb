@@ -7,5 +7,6 @@ describe SearchTerm do
   
   describe "validations" do
     it { should validate_presence_of(:term) }
+    it { should validate_uniqueness_of(:term).ignoring_case_sensitivity }
   end
 end
