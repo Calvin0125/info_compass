@@ -1,5 +1,20 @@
 %h1.mx-auto.text-center.mt-3= "Research Topics"
 .container-md.mx-auto.p-0
+  %button.mb-3.fs-5.btn.btn-primary{data: { bs: { toggle: "modal", target: "#addTopicModal" } } }= "Add Topic"
+  .modal#addTopicModal{ tabindex: "-1" }
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %h5.modal-title= "New Topic"
+        .modal-body
+          = form_for ResearchTopic.new do |f|
+            .mb-3
+              = f.label :title, class: "form-label"
+              = f.text_field :title, class: "form-control mb-3"
+              = f.label :search_terms, "Search Terms (add up to 5)", class: "form-label"
+              - 5.times do |n|
+                = f.text_field :search_terms, value: "",  id: "searchTerm#{n}", name: "research_topic[search_terms][]", class: "form-control mb-2"
+              = f.submit "Add", class: "btn btn-primary"
   - ResearchTopic.all.each.with_index do |topic, topic_number|
     .modal{id: "topic-#{topic_number}-SearchTermModal", tabindex: "-1" }
       .modal-dialog
@@ -20,11 +35,11 @@
           - topic.search_terms.each do |term|
             .col-auto
               = form_for term, method: :delete  do |f|
-                .btn-primary.btn
+                %p.fs-5.text-dark
                   = term.term
                   %button.btn-close(type="submit" aria-label="Close")
           .col-auto
-            %button.btn.btn-dark{ data: { bs: { toggle: "modal", target: "#topic-#{topic_number}-SearchTermModal" } } }= "Add New"
+            %button.btn.btn-primary{ data: { bs: { toggle: "modal", target: "#topic-#{topic_number}-SearchTermModal" } } }= "Add Term"
     - if topic.research_articles.length == 0
       %h4.p-3.my-3.bg-secondary= "There were no articles found for your search."
     - else
