@@ -36,4 +36,37 @@ describe ResearchTopicsController do
       end
     end
   end
+
+  describe "DELETE destroy" do
+    context "no user logged in" do
+      it_behaves_like "a page that requires login" do
+        let(:action) { post :create }
+      end
+    end
+
+    context "user logged in" do
+      before do
+        @user = Fabricate(:user)
+        login(@user)
+      end 
+
+      it "deletes the research topic" do
+        topic = Fabricate(:research_topic, user_id: @user.id)
+        delete :destroy, params: { id: topic.id }
+        expect(ResearchTopic.all.count).to eq(0)
+      end
+
+      it "doesn't delete the topic if it doesn't belong to the logged in user" do
+        topic = Fabricate(:research_topic, user_id: Fabricate(:user, id: 2).id)
+        delete :destroy, params: { id: topic.id }
+        expect(ResearchTopic.all.count).to eq(1)
+      end
+
+      it "redirects to research topics index page" do
+        topic = Fabricate(:research_topic, user_id: @user.id)
+        delete :destroy, params: { id: topic.id }
+        expect(response).to redirect_to research_topics_path
+      end
+    end
+  end
 end

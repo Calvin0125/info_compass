@@ -1,6 +1,8 @@
 class ResearchTopic < ActiveRecord::Base
   default_scope { order(title: :asc) }  
 
+  after_destroy :destroy_articles, :destroy_search_terms
+
   has_many :research_articles
   has_many :search_terms
   belongs_to :user
@@ -55,5 +57,13 @@ class ResearchTopic < ActiveRecord::Base
 
   def new_today_count
     return self.research_articles.where(article_published: Date.yesterday.strftime("%F")).length
+  end
+
+  def destroy_articles
+    self.research_articles.each { |article| article.destroy }
+  end
+
+  def destroy_search_terms
+    self.search_terms.each { |term| term.destroy }
   end
 end

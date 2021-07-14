@@ -15,4 +15,13 @@ class ResearchTopicsController < ApplicationController
     topic.add_new_articles
     redirect_to research_topics_path
   end
+  
+  def destroy
+    topic = ResearchTopic.find(params[:id])
+    if topic.user == helpers.current_user
+      topic.destroy
+    end
+
+    redirect_to research_topics_path
+  end
 end

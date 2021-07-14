@@ -11,6 +11,22 @@ describe ResearchTopic do
     it { should validate_presence_of(:title) }
   end
 
+  describe "after_destroy" do
+    it "deletes the associated articles" do 
+      topic = Fabricate(:research_topic, user_id: Fabricate(:user).id)
+      5.times { |n| Fabricate(:research_article, research_topic_id: topic.id, id: n) }
+      topic.destroy
+      expect(ResearchArticle.all.count).to eq(0)
+    end
+
+    it "deletes the associated search terms" do
+      topic = Fabricate(:research_topic, user_id: Fabricate(:user).id)
+      5.times { |n| Fabricate(:search_term, research_topic_id: topic.id, id: n) }
+      topic.destroy
+      expect(SearchTerm.all.count).to eq(0)
+    end
+  end
+
   describe "order" do
     it "returns items alphabetized by topic name" do
       5.times { |n| Fabricate(:research_topic, id: n + 1, user_id: Fabricate(:user).id) }
