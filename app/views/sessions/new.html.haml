@@ -1,5 +1,6 @@
 .container.mt-4
-  .row
+  %h1.mb-4.border-bottom.border-3.border-dark.pb-2= "Login"
+  .row.justify-content-between
     .col-md-5
       = form_tag '/login' do
         .mb-3
@@ -9,3 +10,6 @@
           %label.form-label(for="password")= "Password"
           %input.form-control#password(type="password" name="password")
         %button.btn.btn-primary(type="submit")= "Login"
+    .col-md-5
+      = image_tag "compass.png", alt: "compass", class: "img-fluid"
+     
