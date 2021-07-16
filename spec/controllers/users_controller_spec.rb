@@ -58,4 +58,98 @@ describe UsersController do
       end
     end
   end
+
+  describe "GET show" do
+    context "no user logged in" do
+      it_behaves_like "a page that requires login" do
+        let(:action) { get :show }
+      end
+    end
+    
+    context "user logged in" do
+      before do
+        login
+      end
+
+      it "sets @user to the current user" do
+        get :show
+        expect(assigns(:user)).to eq(current_user)
+      end
+
+      it "renders show template" do
+        get :show
+        expect(response).to render_template :show
+      end
+    end
+  end
+
+  describe "GET edit" do
+    context "no user logged in" do
+      it_behaves_like "a page that requires login" do
+        let(:action) { get :edit, params: { id: "1" } }
+      end
+    end
+    
+    context "user logged in" do
+      before do
+        @user = Fabricate(:user)
+        login(@user)
+      end
+
+      it "sets @user to the current user" do
+        get :edit, params: { id: @user.id } 
+        expect(assigns(:user)).to eq(current_user)
+      end
+
+      it "renders show template" do
+        get :edit, params: { id: @user.id }
+        expect(response).to render_template :edit
+      end
+    end
+  end
+
+  describe "PUT :update" do
+    context "no user logged in" do
+      it_behaves_like "a page that requires login" do
+        let(:action) { get :edit, params: { id: "1" } }
+      end
+    end
+
+    context "user logged in" do
+      before do
+        @user = Fabricate(:user, password: "password")
+        login(@user)
+      end
+
+      it "updates the attributes for the user" do
+        put :update, params: { id: @user.id, user: { username: "Bob123", email: "bob@builder.com", password: "password" } }
+        @user.reload
+        expect(@user.username).to eq("Bob123")
+        expect(@user.email).to eq("bob@builder.com")
+      end
+
+      it "doesn't update if the user is not the logged in user" do
+        other_user = Fabricate(:user, username: "DonaldDuck123", email: "donald@duck.com", password: "donald")
+        put :update, params: { id: other_user.id, user: { username: "BugsBunny123", email: "bugs@bunny.com", password: "donald" } }
+        expect(other_user.username).to eq("DonaldDuck123")
+        expect(other_user.email).to eq("donald@duck.com")
+      end
+
+      it "sets the flash warning if the user is not the logged in user" do
+        other_user = Fabricate(:user, username: "DonaldDuck123", email: "donald@duck.com", password: "donald")
+        put :update, params: { id: other_user.id, user: { username: "BugsBunny123", email: "bugs@bunny.com", password: "donald" } }
+        expect(flash[:danger]).to eq("You can only edit your own information.")
+      end
+
+      it "redirects to my account if the record is valid" do
+        put :update, params: { id: @user.id, user: { username: "Bob123", email: "bob@builder.com", password: "password" } }
+        expect(response).to redirect_to my_account_path
+      end
+
+      it "renders edit template if the record is invalid" do
+        put :update, params: { id: @user.id, user: { username: "", email: "", password: "" } }
+        expect(response).to render_template :edit
+      end
+    end
+  end
 end
