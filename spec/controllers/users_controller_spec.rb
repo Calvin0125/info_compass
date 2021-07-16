@@ -150,6 +150,11 @@ describe UsersController do
         put :update, params: { id: @user.id, user: { username: "", email: "", password: "" } }
         expect(response).to render_template :edit
       end
+
+      it "sets the flash success if the record is valid" do
+        put :update, params: { id: @user.id, user: { username: "Bob123", email: "bob@builder.com", password: "password" } }
+        expect(flash[:success]).to eq("Your account has been updated.")
+      end
     end
   end
 end
