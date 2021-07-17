@@ -5,25 +5,25 @@
       %span.navbar-toggler-icon
     .collapse.navbar-collapse#navbarContent
       %ul.navbar-nav.d-flex.w-100
-        %li.nav-item.dropdown.me-4.ms-3
+        %li.nav-item.dropdown.me-4.ms-3.d-flex.align-items-center
           %a.nav-link.dropdown-toggle.h5#accountDropdownLink(href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false")= "Welcome, #{current_user.username}"
           %ul.dropdown-menu.dropdown-menu-dark(aria-labelledby="accountDropdownLink")
             %li
               = link_to("My Account", my_account_path, class: "dropdown-item h5")
             %li
               = link_to("Sign Out", logout_path, method: :delete, class: "dropdown-item h5")
-        %li.nav-item
+        %li.nav-item.d-flex.align-items-center
           = link_to "Research Topics", research_topics_path, class: "nav-link h5 ms-3 ms-lg-0"
-        %li.nav-item
+        %li.nav-item.d-flex.align-items-center
           = link_to "News", "#", class: "nav-link h5 ms-3 ms-lg-0"
-        %li.nav-item
+        %li.nav-item.d-flex.align-items-center
           = link_to "Books", "#", class: "nav-link h5 ms-3 ms-lg-0"
-        %li.nav-item
+        %li.nav-item.d-flex.align-items-center
           = link_to "Music", "#", class: "nav-link h5 ms-3 ms-lg-0"
         %li.nav-item.ms-auto.me-3
-          %a{ type: "button", class: "nav-link h5", data: { bs: { toggle: "modal", target: "#aboutModal" } } }= "About"
+          %i.nav-link.h3.bi.bi-question-circle{ type: "button", data: { bs: { toggle: "modal", target: "#infoModal" } } }
   - else
     %ul.navbar-nav.d-flex.ms-auto
       %li.nav-item.me-3
-        %i.nav-link.h3.bi.bi-question-circle{ type: "button", data: { bs: { toggle: "modal", target: "#aboutModal" } } }
+        %i.nav-link.h3.bi.bi-question-circle{ type: "button", data: { bs: { toggle: "modal", target: "#infoModal" } } }
 
