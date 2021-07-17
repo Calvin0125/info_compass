@@ -1,11 +1,13 @@
+= javascript_pack_tag 'research_topics_index', 'data-turbolinks-track': 'reload' if !current_user.visited_research_topics
 %h1.mx-auto.text-center.mt-3= "Research Topics"
 .container-md.mx-auto.p-0
   %button.mb-3.fs-5.btn.btn-primary{data: { bs: { toggle: "modal", target: "#addTopicModal" } } }= "Add Topic"
-  .modal#addTopicModal{ tabindex: "-1" }
+  .modal#addTopicModal{ tabindex: "-1", aria: { labelledby: "topicModalLabel", hidden: "true" } }
     .modal-dialog
       .modal-content
         .modal-header
-          %h5.modal-title= "New Topic"
+          %h5.modal-title#topicModalLabel= "New Topic"
+          %button.btn-close{ type: "button", data: { bs: { dismiss: "modal" } }, aria: { label: "Close" } }
         .modal-body
           = form_for ResearchTopic.new do |f|
             .mb-3
@@ -17,9 +19,12 @@
               = f.submit "Add", class: "btn btn-primary"
   - ResearchTopic.all.each.with_index do |topic, topic_number|
     .container.mb-3.px-0.py-3.border-top.border-dark.border-3
-      .modal{id: "topic-#{topic_number}-SearchTermModal", tabindex: "-1" }
+      .modal{id: "topic-#{topic_number}-SearchTermModal", tabindex: "-1", aria: { labelledby: "searchTermModalLabel", hidden: "true" } }
         .modal-dialog
           .modal-content
+            .modal-header
+              %h5.modal-title#searchTermModalLabel= "New Search Term"
+              %button.btn-close{ data: { bs: { dismiss: "modal" } }, aria: { label: "Close" } }
             .modal-body
               = form_for SearchTerm.new do |f|
                 .mb-3
@@ -115,3 +120,11 @@
                     = f.submit "Yes", class: "btn btn-dark" 
                 .col-2
                   %button.btn.btn-dark{ data: { bs: { dismiss: "modal" } } }= "No"
+.modal#infoModal{ tabindex: "-1", aria: { labelledby: "infoModalLabel", hidden: "false" } }
+  .modal-dialog
+    .modal-content
+      .modal-header
+        .modal-title#infoModalLabel= "About Research Topics Page"
+        %button.btn-close{ type: "button", data: { bs: { dismiss: "modal" } }, aria: { label: "Close" } }
+      .modal-body
+        %p= "hello world"

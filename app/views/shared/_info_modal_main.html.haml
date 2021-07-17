@@ -1,8 +1,9 @@
-.modal#infoModal{ tabindex: "-1" }
+.modal#infoModal{ tabindex: "-1", aria: { labelledby: "infoModalLabel", hidden: "true" } }
   .modal-dialog
     .modal-content
       .modal-header
-        %h5.modal-title.text-dark= "About InfoCompass"
+        %h5.modal-title.text-dark#infoModalLabel= "About InfoCompass"
+        %button.btn-close{ type: "button", data: { bs: { dismiss: "modal" } }, aria: { label: "Close" } }
       .modal-body
         %p.fs-5.mb-3.text-dark= "- InfoCompass is a website that helps you stay up to date on the things you care about."
         %p.fs-5.mb-3.text-dark= "- It is divided into 4 sections: Research Topics, News, Books, and Music."
