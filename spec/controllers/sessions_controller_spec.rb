@@ -72,9 +72,9 @@ describe SessionsController do
         expect(flash[:success]).to eq("You have been logged out.")
       end
 
-      it "redirects to login path" do
+      it "redirects to home path" do
         delete :destroy
-        expect(response).to redirect_to login_path
+        expect(response).to redirect_to home_path
       end
     end
 
