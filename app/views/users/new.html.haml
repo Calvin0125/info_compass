@@ -1,8 +1,8 @@
-= render 'shared/errors', resource: @user
 .container.my-4
   %h1.mb-4.pb-2.border-bottom.border-3.border-dark= "Create Account"
   .row.justify-content-between
     .col-md-5
+      = render 'shared/errors', resource: @user
       = form_for @user do |f|
         .mb-3
           = f.label :email, "Email", class: "form-label"

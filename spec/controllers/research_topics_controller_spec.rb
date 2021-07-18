@@ -1,6 +1,24 @@
 require 'rails_helper.rb'
 
 describe ResearchTopicsController do
+  describe "GET index" do
+    context "no user logged in" do
+      it_behaves_like "a page that requires login" do
+        let(:action) { post :create }
+      end
+    end
+    
+    context "user logged in" do
+      it "sets visited_research_topics to true if user has not visited the page yet" do
+        user = Fabricate(:user)
+        login(user)
+        get :index
+        user.reload
+        expect(user.visited_research_topics).to eq(true)
+      end
+    end
+  end
+
   describe "POST create" do
     context "no user logged in" do
       it_behaves_like "a page that requires login" do

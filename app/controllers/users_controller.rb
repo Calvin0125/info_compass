@@ -29,6 +29,9 @@ class UsersController < ApplicationController
     if @user != helpers.current_user
       flash[:danger] = "You can only edit your own information."
       redirect_to my_account_path
+    elsif !@user.authenticate(params[:user][:password])
+      @user.errors.add(:password, "is incorrect.")
+      render :edit
     elsif @user.update(user_params)
       flash[:success] = "Your account has been updated."
       redirect_to my_account_path

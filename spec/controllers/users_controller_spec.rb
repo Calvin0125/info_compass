@@ -129,15 +129,15 @@ describe UsersController do
       end
 
       it "doesn't update if the user is not the logged in user" do
-        other_user = Fabricate(:user, username: "DonaldDuck123", email: "donald@duck.com", password: "donald")
-        put :update, params: { id: other_user.id, user: { username: "BugsBunny123", email: "bugs@bunny.com", password: "donald" } }
+        other_user = Fabricate(:user, username: "DonaldDuck123", email: "donald@duck.com", password: "donald123")
+        put :update, params: { id: other_user.id, user: { username: "BugsBunny123", email: "bugs@bunny.com", password: "donald123" } }
         expect(other_user.username).to eq("DonaldDuck123")
         expect(other_user.email).to eq("donald@duck.com")
       end
 
       it "sets the flash warning if the user is not the logged in user" do
-        other_user = Fabricate(:user, username: "DonaldDuck123", email: "donald@duck.com", password: "donald")
-        put :update, params: { id: other_user.id, user: { username: "BugsBunny123", email: "bugs@bunny.com", password: "donald" } }
+        other_user = Fabricate(:user, username: "DonaldDuck123", email: "donald@duck.com", password: "donald123")
+        put :update, params: { id: other_user.id, user: { username: "BugsBunny123", email: "bugs@bunny.com", password: "donald123" } }
         expect(flash[:danger]).to eq("You can only edit your own information.")
       end
 
@@ -154,6 +154,15 @@ describe UsersController do
       it "sets the flash success if the record is valid" do
         put :update, params: { id: @user.id, user: { username: "Bob123", email: "bob@builder.com", password: "password" } }
         expect(flash[:success]).to eq("Your account has been updated.")
+      end
+
+      it "doesn't update unless the user enters the proper password" do
+        old_name = @user.username
+        old_email = @user.email
+        put :update, params: { id: @user.id, user: { username: "Bob123", email: "bob@builder.com", password: "wrong_password" } }
+        @user.reload
+        expect(@user.username).to eq(old_name)
+        expect(@user.email).to eq(old_email)
       end
     end
   end
