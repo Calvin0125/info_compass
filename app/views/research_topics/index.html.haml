@@ -17,7 +17,7 @@
               - 5.times do |n|
                 = f.text_field :search_terms, value: "",  id: "searchTerm#{n}", name: "research_topic[search_terms][]", class: "form-control mb-2"
               = f.submit "Add", class: "btn btn-primary"
-  - ResearchTopic.all.each.with_index do |topic, topic_number|
+  - current_user.research_topics.each.with_index do |topic, topic_number|
     .container.mb-3.px-0.py-3.border-top.border-dark.border-3
       .modal{id: "topic-#{topic_number}-SearchTermModal", tabindex: "-1", aria: { labelledby: "searchTermModalLabel", hidden: "true" } }
         .modal-dialog
