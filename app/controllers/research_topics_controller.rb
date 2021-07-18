@@ -2,6 +2,7 @@ class ResearchTopicsController < ApplicationController
   before_action :require_login
 
   def index
+    render :index
     if !helpers.current_user.visited_research_topics
       helpers.current_user.update(visited_research_topics: true)
     end
