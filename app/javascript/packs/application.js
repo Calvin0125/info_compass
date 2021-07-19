@@ -9,6 +9,13 @@ import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import '../stylesheets/application'
 require("bootstrap")
+console.log("outside if block");
+$(document).on("turbolinks:load", function() {
+  if ($('#showInfoModal').length > 0) {
+    console.log("inside if block");
+    require('../info_modal/info_modal');
+  };
+});
 import 'bootstrap-icons/font/bootstrap-icons.css'
 Rails.start()
 Turbolinks.start()
