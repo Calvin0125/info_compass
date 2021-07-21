@@ -6,9 +6,10 @@ Rails.application.routes.draw do
   resources :research_topics, only: [:create, :update, :destroy]
   resources :search_terms, only: [:create, :destroy]
 
-  resources :users, only: [:create, :edit, :update]
-  get '/new_user', to: 'users#new', as: 'new_user'
+  resources :users, only: [:create, :update]
+  get '/new_account', to: 'users#new', as: 'new_account'
   get '/my_account', to: 'users#show', as: 'my_account'
+  get '/edit_account', to: 'users#edit', as: 'edit_account'
 
   get '/login', to: 'sessions#new', as: 'login'
   post '/login', to: 'sessions#create'

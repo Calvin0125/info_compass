@@ -30,6 +30,8 @@ class UsersController < ApplicationController
       flash[:danger] = "You can only edit your own information."
       redirect_to my_account_path
     elsif !@user.authenticate(params[:user][:password])
+      @user.username = params[:user][:username]
+      @user.email = params[:user][:email]
       @user.errors.add(:password, "is incorrect.")
       render :edit
     elsif @user.update(user_params)

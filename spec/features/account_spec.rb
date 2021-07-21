@@ -23,7 +23,7 @@ feature "Account" do
   end
 
   scenario "create new user" do
-    visit "/new_user"
+    visit "/new_account"
     fill_in "Email", with: "user@internet.com"
     fill_in "Username", with: "User123"
     fill_in "Password", with: "password"
