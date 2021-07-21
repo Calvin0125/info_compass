@@ -6,3 +6,4 @@ Misc
   2. Make sure order of articles stays the same because it's annoying that it changes when you add notes. 
   3. List when navbar is expanded on small screen needs a margin
   4. Add feature tests for research info modal, and updating status of articles. Selenium web driver wasn't working right and I needed to move on.
+  5. Also add feature tests for research articles/search terms, they still use JS. 
