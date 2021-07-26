@@ -10,7 +10,7 @@
           %h5.modal-title#topicModalLabel= "New Topic"
           %button.btn-close{ type: "button", data: { bs: { dismiss: "modal" } }, aria: { label: "Close" } }
         .modal-body
-          = form_for ResearchTopic.new do |f|
+          = form_for ResearchTopic.new, url: '/research_topics' do |f|
             .mb-3
               = f.label :title, class: "form-label"
               = f.text_field :title, class: "form-control mb-3"
