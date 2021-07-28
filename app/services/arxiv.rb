@@ -2,6 +2,8 @@ require 'faraday'
 require 'nokogiri'
 
 class Arxiv
+  @@limiter = RateLimiter.new(3)
+
   def self.get_ten_articles(search_terms, page)
     response = self.request(search_terms, page)
     self.format(response)
@@ -41,7 +43,8 @@ class Arxiv
 
   def self.request(search_terms, page)
     query = self.build_query(search_terms, page)
-    Faraday.get(URI.parse("http://export.arxiv.org/api/query?search_query=#{query}&sortBy=submittedDate&sortOrder=descending"))
+    request_url = URI.parse("http://export.arxiv.org/api/query?search_query=#{query}&sortBy=submittedDate&sortOrder=descending")
+    @@limiter.limit { Faraday.get(request_url) }
   end
 
   def self.build_query(search_terms, page)

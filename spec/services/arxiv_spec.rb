@@ -19,5 +19,12 @@ describe Arxiv do
       ResearchArticle.create(articles[0])
       expect(ResearchArticle.count).to eq(1)
     end
+
+    it "only makes one request every 3 seconds" do
+      time = Time.now
+      Arxiv.get_ten_articles(["artificial intelligence"], 0)
+      Arxiv.get_ten_articles(["crispr"], 0)
+      expect(Time.now - time).to be >= 3
+    end
   end
 end
