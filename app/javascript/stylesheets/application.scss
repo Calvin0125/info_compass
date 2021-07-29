@@ -10,4 +10,7 @@ $accordion-button-active-color: #000000;
 $accordion-button-active-bg: #FFFFFF;
 $accordion-button-focus-box-shadow: #FFFFFF;
 $accordion-bg: #F7FAFA;
+i {
+  -webkit-appearance: none !important;
+}
 @import "../../../node_modules/bootstrap/scss/bootstrap";

@@ -21,9 +21,9 @@
         %li.nav-item.d-flex.align-items-center
           = link_to "Music", music_artists_path, class: "nav-link h5 ms-3 ms-lg-0"
         %li.nav-item.ms-auto.me-3
-          %i.nav-link.h3.bi.bi-question-circle{ type: "button", data: { bs: { toggle: "modal", target: "#infoModal" } } }
+          %i.nav-link.h3.bi.bi-question-circle.bg-dark{ type: "button", data: { bs: { toggle: "modal", target: "#infoModal" } } }
   - else
     = link_to "InfoCompass", home_path, class: "text-light mx-3 display-6"
     %ul.navbar-nav.d-flex.ms-auto
       %li.nav-item.me-3
-        %i.nav-link.h3.bi.bi-question-circle{ type: "button", data: { bs: { toggle: "modal", target: "#infoModal" } } }
+        %i.nav-link.h3.bi.bi-question-circle.bg-dark{ type: "button", data: { bs: { toggle: "modal", target: "#infoModal" } } }
