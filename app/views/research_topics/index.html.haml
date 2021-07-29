@@ -1,6 +1,7 @@
 - if !current_user.visited_research_topics
   .d-none#showInfoModal
 %h1.mx-auto.text-center.mt-3= "Research Topics"
+%h4.mx-auto.text-center.my-4= "Thank you to arXiv for use of its open access interoperability."
 .container-md.mx-auto.p-0
   %button.mb-3.fs-5.btn.btn-primary{data: { bs: { toggle: "modal", target: "#addTopicModal" } } }= "Add Topic"
   .modal#addTopicModal{ tabindex: "-1", aria: { labelledby: "topicModalLabel", hidden: "true" } }
