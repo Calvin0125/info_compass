@@ -33,22 +33,22 @@ describe ResearchTopicsController do
         @params = { params: { research_topic: { title: "Synthetic Biology", search_terms: ["synthetic biology", "crispr", "", "", ""] } } }
       end
       
-      it "creates the new topic for the logged in user", :vcr do
+      it "creates the new topic for the logged in user", vcr: { re_record_interval: 7.days } do
         post :create, @params  
         expect(@user.research_topics.count).to eq(1)
       end
 
-      it "creates the search terms for the new topic", :vcr do
+      it "creates the search terms for the new topic", vcr: { re_record_interval: 7.days } do
         post :create, @params
         expect(@user.research_topics.first.search_terms.count).to eq(2)
       end
 
-      it "adds 10 new articles for the new topic", :vcr do
+      it "adds 10 new articles for the new topic", vcr: { re_record_interval: 7.days } do
         post :create, @params
         expect(@user.research_topics.first.research_articles.count).to eq(10)
       end
 
-      it "redirects to research topics index page", :vcr do
+      it "redirects to research topics index page", vcr: { re_record_interval: 7.days } do
         post :create, @params
         expect(response).to redirect_to(research_topics_path)
       end

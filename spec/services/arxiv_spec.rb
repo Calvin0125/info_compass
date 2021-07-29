@@ -1,12 +1,7 @@
 require 'rails_helper.rb'
 
 describe Arxiv do
-  describe "::get_ten_articles", :vcr do
-    it "returns array of hashes" do
-      articles = Arxiv.get_ten_articles(["gene editing"], 0)
-      expect(articles[0].class).to eq(Hash)
-    end
-    
+  describe "::get_ten_articles", vcr: { re_record_interval: 7.days } do
     it "returns empty array if no results found" do
       articles = Arxiv.get_ten_articles(["qwefqweqefqwfwew"], 0)
       expect(articles.length).to eq(0)

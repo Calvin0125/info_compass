@@ -2,7 +2,7 @@ require 'rails_helper.rb'
 
 describe SearchTermsController do
   describe "POST create" do
-    it "creates the specified search term", :vcr do
+    it "creates the specified search term", vcr: { re_record_interval: 7.days } do
       user = Fabricate(:user)
       login(user)
       topic = Fabricate(:research_topic, user_id: user.id)
@@ -10,7 +10,7 @@ describe SearchTermsController do
       expect(SearchTerm.count).to eq(1)
     end
 
-    it "doesn't create the term if it is for a topic that doesn't belong to the logged in user", :vcr do
+    it "doesn't create the term if it is for a topic that doesn't belong to the logged in user", vcr: { re_record_interval: 7.days } do
       user1 = Fabricate(:user)
       user2 = Fabricate(:user, id: 2)
       login(user1)
@@ -19,7 +19,7 @@ describe SearchTermsController do
       expect(SearchTerm.count).to eq(0)
     end
     
-    it "sets the flash warning if user tries to add a term for a topic that isn't theirs", :vcr do
+    it "sets the flash warning if user tries to add a term for a topic that isn't theirs", vcr: { re_record_interval: 7.days } do
       user1 = Fabricate(:user)
       user2 = Fabricate(:user, id: 2)
       login(user1)
@@ -28,7 +28,7 @@ describe SearchTermsController do
       expect(flash[:danger]).to eq("You can only add search terms to topics that belong to you.") 
     end
 
-    it "redirects to research topics index", :vcr do
+    it "redirects to research topics index", vcr: { re_record_interval: 7.days } do
       user = Fabricate(:user)
       login(user)
       topic = Fabricate(:research_topic, user_id: user.id)
@@ -36,7 +36,7 @@ describe SearchTermsController do
       expect(response).to redirect_to research_topics_path
     end
     
-    it "refreshes new articles for the associated topic", :vcr do
+    it "refreshes new articles for the associated topic", vcr: { re_record_interval: 7.days } do
       user = Fabricate(:user)
       login(user)
       topic = Fabricate(:research_topic, user_id: user.id)
@@ -46,7 +46,7 @@ describe SearchTermsController do
   end
 
   describe "DELETE destroy" do
-    it "removes the specified search term", :vcr do
+    it "removes the specified search term", vcr: { re_record_interval: 7.days } do
       user = Fabricate(:user)
       login(user)
       topic = Fabricate(:research_topic, user_id: user.id)
@@ -55,7 +55,7 @@ describe SearchTermsController do
       expect(SearchTerm.count).to eq(0)     
     end
 
-    it "only removes the search term if it belongs to the logged in user", :vcr do
+    it "only removes the search term if it belongs to the logged in user", vcr: { re_record_interval: 7.days } do
       user1 = Fabricate(:user)
       login(user1)
       user2 = Fabricate(:user, id: 2)
@@ -65,7 +65,7 @@ describe SearchTermsController do
       expect(SearchTerm.count).to eq(1)
     end
 
-    it "sets the flash warning if user tries to delete a term for a topic that isn't theirs", :vcr do
+    it "sets the flash warning if user tries to delete a term for a topic that isn't theirs", vcr: { re_record_interval: 7.days } do
       user1 = Fabricate(:user)
       login(user1)
       user2 = Fabricate(:user, id: 2)
@@ -75,7 +75,7 @@ describe SearchTermsController do
       expect(flash[:danger]).to eq("You can only delete search terms for topics that belong to you.")
     end
 
-    it "redirects to the topics index page", :vcr do
+    it "redirects to the topics index page", vcr: { re_record_interval: 7.days } do
       user = Fabricate(:user)
       login(user)
       topic = Fabricate(:research_topic, user_id: user.id)
@@ -84,7 +84,7 @@ describe SearchTermsController do
       expect(response).to redirect_to(research_topics_path)
     end
 
-    it "it refreshes new articles on the associated topic", :vcr do
+    it "refreshes new articles on the associated topic", vcr: { re_record_interval: 7.days } do
       user = Fabricate(:user)
       login(user)
       topic = Fabricate(:research_topic, user_id: user.id, id: 1)

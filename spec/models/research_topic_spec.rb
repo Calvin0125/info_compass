@@ -34,7 +34,7 @@ describe ResearchTopic do
     end
   end
 
-  describe "#refresh_new_articles", :vcr do
+  describe "#refresh_new_articles", vcr: { re_record_interval: 7.days } do
     it "removes all the articles currently in new" do
       topic = Fabricate(:research_topic, user_id: Fabricate(:user).id)
       Fabricate(:search_term, term: "crispr", research_topic_id: topic.id)
@@ -56,7 +56,7 @@ describe ResearchTopic do
     end
   end
 
-  describe "::add_new_articles", :vcr do
+  describe "::add_new_articles", vcr: { re_record_interval: 7.days } do
     it "loads new articles in database" do
       topic = Fabricate(:research_topic, user_id: Fabricate(:user).id)
       Fabricate(:search_term, research_topic_id: topic.id, term: "artificial intelligence")
