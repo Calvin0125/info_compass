@@ -105,12 +105,23 @@ describe ResearchTopic do
   end
 
   describe "#new_today_count" do
-    it "returns the number of articles that are new today" do
+    it "returns the number of articles that are new today(were published yesterday)" do
       user = Fabricate(:user)
       topic = Fabricate(:research_topic, user_id: user.id)
       article1 = Fabricate(:research_article, research_topic_id: topic.id, article_published: Date.yesterday.strftime("%F"))
       article2 = Fabricate(:research_article, research_topic_id: topic.id, article_published: Date.yesterday.strftime("%F"), id: 2)
       article3 = Fabricate(:research_article, research_topic_id: topic.id, article_published: '2021-01-01', id: 3) 
+      expect(topic.new_today_count).to eq(2)
+    end
+
+    it "doesn't count articles that are saved or read" do
+      user = Fabricate(:user)
+      topic = Fabricate(:research_topic, user_id: user.id)
+      article1 = Fabricate(:research_article, research_topic_id: topic.id, article_published: Date.yesterday.strftime("%F"))
+      article2 = Fabricate(:research_article, research_topic_id: topic.id, article_published: Date.yesterday.strftime("%F"), id: 2)
+      article3 = Fabricate(:research_article, research_topic_id: topic.id, article_published: '2021-01-01', id: 3) 
+      article4 = Fabricate(:research_article, research_topic_id: topic.id, article_published: Date.yesterday.strftime("%F"), status: "read", id: 4)
+      article5 = Fabricate(:research_article, research_topic_id: topic.id, article_published: Date.yesterday.strftime("%F"), status: "saved", id: 5)
       expect(topic.new_today_count).to eq(2)
     end
   end

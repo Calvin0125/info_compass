@@ -56,7 +56,7 @@ class ResearchTopic < ActiveRecord::Base
   end
 
   def new_today_count
-    return self.research_articles.where(article_published: Date.yesterday.strftime("%F")).length
+    return self.research_articles.where(article_published: Date.yesterday.strftime("%F"), status: "new").length
   end
 
   def destroy_articles
