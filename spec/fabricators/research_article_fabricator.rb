@@ -4,7 +4,7 @@ Fabricator(:research_article) do
   id { 1 }
   title { Faker::Lorem.words(number: 5).join(" ") }
   author_csv { [Faker::Name.name, Faker::Name.name, Faker::Name.name].join(",") }
-  summary { Faker::Lorem.words(25).join(" ") }
+  summary { Faker::Lorem.words(number: 25).join(" ") }
   api { "arxiv" }
   api_id { "http://arxiv.org/abs/hep-ex/0307015" }
   article_published { "2021-05-31" }
