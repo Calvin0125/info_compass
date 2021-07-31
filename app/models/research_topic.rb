@@ -51,7 +51,7 @@ class ResearchTopic < ActiveRecord::Base
 
   def ensure_only_ten_new_articles
     while self.research_articles.where(status: "new").length > 10
-      self.research_articles.where(status: "new").order(article_published: :asc).first.destroy
+      self.research_articles.where(status: "new").except(:order).order(article_published: :asc).first.destroy
     end
   end
 
