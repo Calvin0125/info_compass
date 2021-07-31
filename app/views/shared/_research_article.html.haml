@@ -22,4 +22,18 @@
         = f.hidden_field(:status, value: "saved")
         = f.submit "Mark Unread", class: "btn btn-primary"
   .col-auto
+    %button.btn.btn-primary{type: "button", data: { bs: { toggle: "modal", target: "#notInterestedArticle-#{article.id}" } } }= "Not Interested"
+    .modal{ id: "notInterestedArticle-#{article.id}", tabindex: "-1" }
+      .modal-dialog
+        .modal-content
+          .modal-body
+            %p= "Are you sure you want to mark <em>#{article.title}</em> as 'Not Interested'? You will not see this article again.".html_safe
+            .row.gy-3
+              .col-auto
+                = form_for(article) do |f|
+                  = f.hidden_field(:status, value: "not interested")
+                  = f.submit "Not Interested", class: "btn btn-dark"
+              .col-auto
+                %button.btn.btn-dark{ data: { bs: { dismiss: "modal" } } }= "Cancel"
+  .col-auto
     %a.btn.btn-primary{ href: article.api_id, role: "button"}= "Read Full Article"

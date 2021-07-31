@@ -116,11 +116,11 @@
           .modal-content
             .modal-body
               %p= "Are you sure you want to delete the topic <em>#{topic.title}</em>? This cannot be undone.".html_safe
-              .row
-                .col-2
+              .row.gy-3
+                .col-auto
                   = form_for topic, method: :delete do |f|
                     = f.submit "Yes", class: "btn btn-dark" 
-                .col-2
+                .col-auto
                   %button.btn.btn-dark{ data: { bs: { dismiss: "modal" } } }= "No"
 .modal#infoModal{ tabindex: "-1", aria: { labelledby: "infoModalLabel", hidden: "false" } }
   .modal-dialog.modal-lg
