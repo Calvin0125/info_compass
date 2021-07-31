@@ -3,7 +3,7 @@
 = form_for(article) do |f|
   .mb-3
     = f.text_area :notes, class: "form-control", rows: "10"
-.row.gy-3
+.row.gy-3.justify-content-evenly.justify-content-md-start
   .col-auto
     %button.btn.btn-primary{ form: "edit_research_article_#{article.id}" }= "Save Notes"
   - if article.status == "new"
