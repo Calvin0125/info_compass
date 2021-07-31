@@ -2,8 +2,8 @@
   .d-none#showInfoModal
 %h1.mx-auto.text-center.mt-3= "Research Topics"
 %h4.mx-auto.text-center.my-4= "Thank you to arXiv for use of its open access interoperability."
-.container-md.mx-auto.p-0
-  %button.mb-3.fs-5.btn.btn-primary{data: { bs: { toggle: "modal", target: "#addTopicModal" } } }= "Add Topic"
+.container-md.mx-auto.p-0.d-flex.flex-column.justify-content-center.d-md-block
+  %button.mb-3.fs-5.btn.btn-primary.mx-auto{data: { bs: { toggle: "modal", target: "#addTopicModal" } } }= "Add Topic"
   .modal#addTopicModal{ tabindex: "-1", aria: { labelledby: "topicModalLabel", hidden: "true" } }
     .modal-dialog
       .modal-content
@@ -20,7 +20,7 @@
                 = f.text_field :search_terms, value: "",  id: "searchTerm#{n}", name: "research_topic[search_terms][]", class: "form-control mb-2"
               = f.submit "Add", class: "btn btn-primary"
   - current_user.research_topics.each.with_index do |topic, topic_number|
-    .container.mb-3.px-0.py-3.border-top.border-dark.border-3
+    .container-md.mb-3.px-0.py-3.border-top.border-dark.border-3.d-flex.flex-column.justify-content-center.d-md-block
       .modal{id: "topic-#{topic_number}-SearchTermModal", tabindex: "-1", aria: { labelledby: "searchTermModalLabel", hidden: "true" } }
         .modal-dialog
           .modal-content
@@ -34,12 +34,12 @@
                   = f.text_field :term, class: "form-control mb-3"
                   = f.hidden_field :research_topic_id, value: topic.id
                   = f.submit "Add", class: "btn btn-primary"
-      %h2= topic.title
-      .row
-        .col-auto
-          %h4= "Search Terms:"
+      %h2.text-center.text-md-start.mb-3= topic.title
+      .row.justify-content-center.justify-content-md-start
+        .col-md-auto.col-12
+          %h4.text-center= "Search Terms:"
         .col-9 
-          .row.gy-2
+          .row.gy-2.justify-content-center.justify-content-md-start
             - topic.search_terms.each do |term|
               .col-auto
                 = form_for term, method: :delete  do |f|
@@ -110,7 +110,7 @@
                       .collapse.accordion-collapse{ id: "topic-#{topic_number}-readArticle-#{article_number}-collapse", aria: { labelledby: "topic-#{topic_number}-readArticle-#{article_number}" } }
                         .accordion-body
                           = render 'shared/research_article', article: article
-      %button.btn.btn-dark{type: "button", data: { bs: { toggle: "modal", target: "#deleteTopic-#{topic_number}" } } }= "Delete Topic"
+      %button.btn.btn-dark.mx-auto{type: "button", data: { bs: { toggle: "modal", target: "#deleteTopic-#{topic_number}" } } }= "Delete Topic"
       .modal{ id: "deleteTopic-#{topic_number}", tabindex: "-1" }
         .modal-dialog
           .modal-content
