@@ -1,26 +1,26 @@
 %nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
   - if logged_in?
     = link_to "InfoCompass", research_topics_path, class: "text-light mx-3 display-6"
-    %button.navbar-toggler#navbarToggler(type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation")
+    %button.navbar-toggler.me-2#navbarToggler(type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation")
       %span.navbar-toggler-icon
     .collapse.navbar-collapse#navbarContent
-      %ul.navbar-nav.d-flex.w-100
-        %li.nav-item.dropdown.me-4.ms-3.d-flex.align-items-center
+      %ul.navbar-nav.d-flex.align-items-center.w-100
+        %li.nav-item.dropdown.me-4.ms-3
           %a.nav-link.dropdown-toggle.h5#accountDropdownLink(href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false")= "Welcome, #{current_user.username}"
           %ul.dropdown-menu.dropdown-menu-dark(aria-labelledby="accountDropdownLink")
             %li
               = link_to("My Account", my_account_path, class: "dropdown-item h5")
             %li
               = link_to("Sign Out", logout_path, method: :delete, class: "dropdown-item h5")
-        %li.nav-item.d-flex.align-items-center
+        %li.nav-item
           = link_to "Research Topics", research_topics_path, class: "nav-link h5 ms-3 ms-lg-0"
-        %li.nav-item.d-flex.align-items-center
+        %li.nav-item
           = link_to "News", news_topics_path, class: "nav-link h5 ms-3 ms-lg-0"
-        %li.nav-item.d-flex.align-items-center
+        %li.nav-item
           = link_to "Books", authors_path, class: "nav-link h5 ms-3 ms-lg-0"
-        %li.nav-item.d-flex.align-items-center
+        %li.nav-item
           = link_to "Music", music_artists_path, class: "nav-link h5 ms-3 ms-lg-0"
-        %li.nav-item.ms-auto.me-3
+        %li.nav-item.ms-lg-auto.me-lg-3.ms-3
           %i.nav-link.h3.bi.bi-question-circle.bg-dark{ type: "button", data: { bs: { toggle: "modal", target: "#infoModal" } } }
   - else
     = link_to "InfoCompass", home_path, class: "text-light mx-3 display-6"
