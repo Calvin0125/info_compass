@@ -6,7 +6,6 @@ class User < ActiveRecord::Base
   validates_presence_of :username, :email
   validates :password, length: { minimum: 8 }, if: :password_required?
   validates_uniqueness_of :email, :username
-
   def enforce_password_validation
     @enforce_password_validation = true
   end

@@ -17,7 +17,7 @@ class ResearchTopicsController < ApplicationController
           SearchTerm.create(term: term, research_topic: topic)
         end
       end
-      topic.add_new_articles
+      topic.reload.add_new_articles
     else
       flash[:danger] = topic.errors.full_messages.join(" ")
     end

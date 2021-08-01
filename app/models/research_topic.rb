@@ -9,6 +9,11 @@ class ResearchTopic < ActiveRecord::Base
 
   validates_presence_of :title
   validates_uniqueness_of :title
+  validate on: :create do
+    if user && user.research_topics.length >= 25
+      errors.add(:base, message: "You can't have more than 25 topics.")
+    end
+  end
 
   def self.add_new_articles
     self.all.each do |topic|

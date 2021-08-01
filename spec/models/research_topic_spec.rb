@@ -9,6 +9,16 @@ describe ResearchTopic do
 
   describe "validations" do
     it { should validate_presence_of(:title) }
+    it "shouldn't allow a user to have more than 25 research topics" do
+      user = Fabricate(:user)
+      25.times { |n| Fabricate(:research_topic, user_id: user.id, id: n + 1) }
+      begin
+        Fabricate(:research_topic, user_id: user.id, id: 30)
+      rescue
+      end
+      
+      expect(user.reload.research_topics.length).to eq(25)
+    end
   end
 
   describe "after_destroy" do

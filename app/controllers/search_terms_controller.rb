@@ -3,7 +3,7 @@ class SearchTermsController < ApplicationController
     term = SearchTerm.new(search_term_params)
     topic = term.research_topic
     if topic.user == helpers.current_user
-      topic.refresh_new_articles if term.save
+      topic.reload.refresh_new_articles if term.save
       flash[:danger] = term.errors.full_messages.join(" ")
     else
       flash[:danger] = "You can only add search terms to topics that belong to you."
