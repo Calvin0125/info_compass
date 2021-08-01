@@ -10,6 +10,14 @@ describe SearchTermsController do
       expect(SearchTerm.count).to eq(1)
     end
 
+    it "sets the flash warning if there is an error with search term" do
+      user = Fabricate(:user)
+      login(user)
+      topic = Fabricate(:research_topic, user_id: user.id)
+      post :create, params: { search_term: { term: "", research_topic_id: topic.id } }
+      expect(flash[:danger].length).to be > 0
+    end
+
     it "doesn't create the term if it is for a topic that doesn't belong to the logged in user", vcr: { re_record_interval: 7.days } do
       user1 = Fabricate(:user)
       user2 = Fabricate(:user, id: 2)

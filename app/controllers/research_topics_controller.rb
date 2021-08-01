@@ -10,13 +10,17 @@ class ResearchTopicsController < ApplicationController
 
   def create
     title = params[:research_topic][:title]
-    topic = ResearchTopic.create(title: title, user: helpers.current_user)
-    params[:research_topic][:search_terms].each do |term|
-      if term.length > 0
-        SearchTerm.create(term: term, research_topic: topic)
+    topic = ResearchTopic.new(title: title, user: helpers.current_user)
+    if topic.save
+      params[:research_topic][:search_terms].each do |term|
+        if term.length > 0
+          SearchTerm.create(term: term, research_topic: topic)
+        end
       end
+      topic.add_new_articles
+    else
+      flash[:danger] = topic.errors.full_messages.join(" ")
     end
-    topic.add_new_articles
     redirect_to research_topics_path
   end
   

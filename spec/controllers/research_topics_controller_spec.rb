@@ -33,6 +33,11 @@ describe ResearchTopicsController do
         @params = { params: { research_topic: { title: "Synthetic Biology", search_terms: ["synthetic biology", "crispr", "", "", ""] } } }
       end
       
+      it "sets the flash warning if there is an error saving the record" do
+        post :create, params: { research_topic: { title: "", search_terms: ["hello world", "hello universe", "42", "", ""] } }
+        expect(flash[:danger].length).to be > 0
+      end
+
       it "creates the new topic for the logged in user", vcr: { re_record_interval: 7.days } do
         post :create, @params  
         expect(@user.research_topics.count).to eq(1)
