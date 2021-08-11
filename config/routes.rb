@@ -15,6 +15,11 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy', as: 'logout'
 
+  # Error routes
+  get "/404", to: "errors#error_404"
+  get "/422", to: "errors#error_422"
+  get "/500", to: "errors#error_500"
+
   # routes under construction
   get '/news', to: 'news_topics#index', as: 'news_topics'
   get '/music', to: 'music_artists#index', as: 'music_artists'
