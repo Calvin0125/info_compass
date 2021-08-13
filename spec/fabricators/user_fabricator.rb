@@ -5,4 +5,5 @@ Fabricator(:user) do
   email { Faker::Internet.email }
   password { "password" }
   visited_research_topics { false }
+  token { nil }
 end
