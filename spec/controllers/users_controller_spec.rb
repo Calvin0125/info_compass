@@ -166,4 +166,19 @@ describe UsersController do
       end
     end
   end
+
+  describe "GET forgot_password" do
+    context "user logged in" do
+      it_behaves_like "a page that requires no login" do
+        let(:action) { get :forgot_password }
+      end
+    end
+
+    context "no user logged in" do
+      it "renders forgot password template" do
+        get :forgot_password
+        expect(response).to render_template :forgot_password 
+      end
+    end
+  end
 end

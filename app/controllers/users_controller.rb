@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :require_no_login, only: [:new, :create]
+  before_action :require_no_login, only: [:new, :create, :forgot_password]
   before_action :require_login, only: [:show, :edit, :update]
 
   def new
@@ -40,6 +40,9 @@ class UsersController < ApplicationController
     else
       render :edit 
     end
+  end
+
+  def forgot_password
   end
 
   private

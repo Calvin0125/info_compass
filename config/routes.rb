@@ -10,6 +10,11 @@ Rails.application.routes.draw do
   get '/new_account', to: 'users#new', as: 'new_account'
   get '/my_account', to: 'users#show', as: 'my_account'
   get '/edit_account', to: 'users#edit', as: 'edit_account'
+  get '/forgot_password', to: 'users#forgot_password', as: 'forgot_password'
+  post '/forgot_password', to: 'users#forgot_password'
+  get '/reset_password', to: 'users#reset_password', as: 'reset_password'
+  post '/reset_password', to: 'users#reset_password'
+  get '/reset_password_confirmation', to: 'users#reset_password_confirmation', as: 'reset_password_confirmation'
 
   get '/login', to: 'sessions#new', as: 'login'
   post '/login', to: 'sessions#create'
