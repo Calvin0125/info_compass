@@ -13,7 +13,6 @@ Rails.application.configure do
       user_name: Rails.application.credentials.zoho[:username],
       password: Rails.application.credentials.zoho[:password],
       authentication: :plain,
-      tls: true,
       enable_starttls_auto: true
     }
 
