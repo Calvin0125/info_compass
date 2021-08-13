@@ -43,6 +43,21 @@ class UsersController < ApplicationController
   end
 
   def forgot_password
+    if request.get?
+      render :forgot_password
+    elsif request.post?
+      @user = User.find_by(email: params[:email])
+
+      if @user
+        @user.set_token
+        @url = reset_password_url(@user)
+        UserMailer.reset_password(@user, @url).deliver
+        redirect_to reset_password_confirmation_path
+      else
+        flash[:danger] = "No user matches the email address you entered."
+        redirect_to forgot_password_path
+      end
+    end
   end
 
   private

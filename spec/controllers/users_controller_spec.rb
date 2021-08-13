@@ -181,4 +181,54 @@ describe UsersController do
       end
     end
   end
+
+  describe "POST forgot_password" do
+    context "user logged in" do
+      it_behaves_like "a page that requires no login" do
+        let(:action) { post :forgot_password }
+      end
+    end
+
+    context "no user logged in" do
+      context "valid email" do 
+        before(:each) do
+          @user = Fabricate(:user)
+          post :forgot_password, params: { email: @user.email }
+        end
+
+        it "sets the user based on email in params" do
+          expect(assigns(:user)).to eq(@user)
+        end
+
+        it "sends the email" do
+          expect(ActionMailer::Base.deliveries.length).to be > 0
+        end
+
+        it "sets a random token on the user requesting a password reset" do
+          expect(User.first.token).not_to be_empty
+        end
+
+        it "the email contains a link to reset_password/:token" do
+          message = ActionMailer::Base.deliveries.last
+          expect(message.body).to include("/reset_password/#{@user.reload.token}")
+        end
+
+        it "redirects to confirm password reset path" do
+          expect(response).to redirect_to reset_password_confirmation_path
+        end
+      end
+
+      context "invalid email" do
+        before(:each) { post :forgot_password, params: { email: Faker::Internet.email } }
+
+        it "redirects to forgot_password" do
+          expect(response).to redirect_to forgot_password_path
+        end
+
+        it "sets the flash warning" do
+          expect(flash[:danger]).to eq("No user matches the email address you entered.")
+        end
+      end
+    end
+  end
 end

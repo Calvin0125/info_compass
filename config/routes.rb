@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   get '/edit_account', to: 'users#edit', as: 'edit_account'
   get '/forgot_password', to: 'users#forgot_password', as: 'forgot_password'
   post '/forgot_password', to: 'users#forgot_password'
-  get '/reset_password', to: 'users#reset_password', as: 'reset_password'
+  get '/reset_password/:token', to: 'users#reset_password', as: 'reset_password'
   post '/reset_password', to: 'users#reset_password'
   get '/reset_password_confirmation', to: 'users#reset_password_confirmation', as: 'reset_password_confirmation'
 
