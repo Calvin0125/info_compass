@@ -231,4 +231,69 @@ describe UsersController do
       end
     end
   end
+
+  describe "GET reset_password/:token" do
+    context "user logged in" do
+      it_behaves_like "a page that requires no login" do
+        let(:action) { get :reset_password, params: { token: SecureRandom.urlsafe_base64 } }
+      end
+    end
+
+    context "no user logged in" do
+      it "renders the reset password template" do
+        user = Fabricate(:user, token: SecureRandom.urlsafe_base64)
+        get :reset_password, params: { token: user.token }
+      end
+    end
+  end
+
+  describe "POST reset_password" do
+    context "user logged in" do
+      it_behaves_like "a page that requires no login" do
+        let(:action) { post :reset_password }
+      end
+    end
+
+    context "no user logged in" do
+      context "valid password" do
+        before(:each) do
+          @user = Fabricate(:user, token: SecureRandom.urlsafe_base64)
+          params = { params: { user: { token: @user.token, password: "new_password" } } }
+          post :reset_password, params 
+        end
+
+        it "resets the password for the user associated with the token" do
+          expect(@user.reload.authenticate("new_password")).to eq(@user.reload)  
+        end
+
+        it "removes the token" do
+          expect(@user.reload.token).to eq(nil)
+        end
+
+        it "sets the flash notice" do
+          expect(flash[:success].length).to be > 0
+        end
+
+        it "redirects to login path" do
+          expect(response).to redirect_to login_path
+        end
+      end
+
+      context "invalid password" do
+        before(:each) do
+          @user = Fabricate(:user, token: SecureRandom.urlsafe_base64, password: "password")
+          params = { params: { user: { token: @user.token, password: "invalid" } } }
+          post :reset_password, params
+        end
+
+        it "doesn't change the password" do
+          expect(@user.reload.authenticate("password")).to eq(@user.reload)
+        end
+
+        it "renders reset password template" do
+          expect(response).to render_template :reset_password
+        end
+      end
+    end
+  end
 end

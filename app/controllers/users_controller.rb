@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :require_no_login, only: [:new, :create, :forgot_password]
+  before_action :require_no_login, only: [:new, :create, :forgot_password, :reset_password, :reset_password_confirmation]
   before_action :require_login, only: [:show, :edit, :update]
 
   def new
@@ -56,6 +56,24 @@ class UsersController < ApplicationController
       else
         flash[:danger] = "No user matches the email address you entered."
         redirect_to forgot_password_path
+      end
+    end
+  end
+
+  def reset_password
+    token = params[:token] || params[:user][:token]
+    @user = User.find_by(token: token)  
+
+    if request.get?
+      render :reset_password
+    elsif request.post?
+      @user.password = params[:user][:password]
+      if @user.save
+        @user.remove_token
+        flash[:success] = "Your password has been updated, please log in."
+        redirect_to login_path
+      else
+        render :reset_password
       end
     end
   end
