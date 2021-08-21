@@ -11,7 +11,7 @@ describe ResearchTopic do
     it { should validate_presence_of(:title) }
     it "shouldn't allow a user to have more than 25 research topics" do
       user = Fabricate(:user)
-      25.times { |n| Fabricate(:research_topic, user_id: user.id, id: n + 1) }
+      25.times { |n| Fabricate(:research_topic, title: "Topic #{n}", user_id: user.id, id: n + 1) }
       begin
         Fabricate(:research_topic, user_id: user.id, id: 30)
       rescue
