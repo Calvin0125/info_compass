@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v1.4.2
+      - Faraday v1.7.0
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -19,7 +19,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 01 Aug 2021 20:09:30 GMT
+      - Sun, 22 Aug 2021 23:18:13 GMT
       Server:
       - Apache
       Access-Control-Allow-Origin:
@@ -27,7 +27,7 @@ http_interactions:
       Vary:
       - Accept-Encoding,User-Agent
       Content-Length:
-      - '392'
+      - '396'
       Content-Type:
       - application/atom+xml; charset=UTF-8
     body:
@@ -38,10 +38,10 @@ http_interactions:
           <link href="http://arxiv.org/api/query?search_query%3D%26id_list%3D%26start%3D0%26max_results%3D10" rel="self" type="application/atom+xml"/>
           <title type="html">ArXiv Query: search_query=&amp;id_list=&amp;start=0&amp;max_results=10</title>
           <id>http://arxiv.org/api/iQlyOhQ3W8t8kI903+StmrBZNWM</id>
-          <updated>2021-08-01T00:00:00-04:00</updated>
+          <updated>2021-08-22T00:00:00-04:00</updated>
           <opensearch:totalResults xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/">0</opensearch:totalResults>
           <opensearch:startIndex xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/">0</opensearch:startIndex>
           <opensearch:itemsPerPage xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/">10</opensearch:itemsPerPage>
         </feed>
-  recorded_at: Sun, 01 Aug 2021 20:09:33 GMT
+  recorded_at: Sun, 22 Aug 2021 23:18:28 GMT
 recorded_with: VCR 6.0.0
