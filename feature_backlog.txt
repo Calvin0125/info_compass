@@ -1,3 +1,9 @@
 1. Feature test for resetting password 
 2. Add feature tests for research info modal, and updating status of articles. Selenium web driver wasn't working right and I needed to move on.
 3. Also add feature tests for research articles/search terms, they still use JS. 
+4. Add a cutoff to Arxiv if too many new results are found like I have in Google Books
+5. Update Arxiv so it shows 10 most recent articles or ALL new articles if more than 10 in a day, up to maybe 50.
+6. Right now the filtering algorithm for google books only allows dates with 'yyyy-mm-dd' which cuts down on 
+   many duplicates, 2nd editions, and otherwise bad data. However, it sometimes misses books a user may want
+   to see. In the future, I'd like to retrieve all of those and give the user the option to show the hidden
+   results.

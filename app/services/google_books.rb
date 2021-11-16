@@ -16,6 +16,9 @@ class GoogleBooks
     start_index = 0
     processed_books = {}
     total_items_count = get_total_items_count(author)
+    # Agatha Christie and other prolific authors had < 500 results
+    # so 2500 seems like a safe cutoff number
+    return too_many_books if total_items_count > 2500
 
     while start_index < total_items_count
       books = get_books_from_next_page(author, start_index)
@@ -24,13 +27,17 @@ class GoogleBooks
       start_index += MAX_RESULTS_ALLOWED
     end
 
-    processed_books
+    processed_books_hash_to_array(processed_books)
   end
 
   def self.get_total_items_count(author)
     response = Faraday.get("https://www.googleapis.com/books/v1/volumes?q=inauthor:#{author}&key=#{API_KEY}")
     books = JSON.parse(response.body)
     books["totalItems"]
+  end
+
+  def self.too_many_books
+    [{ title: "Error: Too Many Books" }]
   end
 
   def self.get_books_from_next_page(author, start_index)
@@ -43,10 +50,14 @@ class GoogleBooks
     books.each do |book|
       if valid_book(book, processed_books, author)
         # title is downcased to avoid duplicates with different casing
-        title = book["volumeInfo"]["title"].downcase
-        published_date = book["volumeInfo"]["publishedDate"]
-        authors = book["volumeInfo"]["authors"]
-        processed_books[title] = { published_date: published_date, authors: authors }
+        book = book["volumeInfo"]
+        title = book["title"].downcase
+        published_date = book["publishedDate"]
+        processed_books[title] = { published_date: published_date,
+                                   authors: author_csv(book["authors"]),
+                                   description: book["description"],
+                                   status: get_status(published_date)
+                                 }
       end
     end
 
@@ -81,5 +92,33 @@ class GoogleBooks
       return true if author.downcase.gsub(' ', '') == author_entered_by_user.downcase.gsub(' ', '')
     end
     false
+  end
+
+  def self.author_csv(authors_array)
+    authors_array.join(",")
+  end
+
+  def self.get_status(date)
+    if Date.parse <= Date.today
+      "published"
+    else
+      "coming_soon"
+    end
+  end
+
+  def self.processed_books_hash_to_array(processed_books_hash)
+    processed_books_array = []
+
+    processed_books_hash.keys.each do |title|
+      book = { title: title.titleize, 
+               published_date: processed_books_hash[title][:published_date],
+               authors: processed_books_hash[title][:authors],
+               description: processed_books_hash[title][:description],
+               status: processed_books_hash[title][:status]
+             }
+      processed_books_array.push(book)
+    end
+    
+    processed_books_array
   end
 end
