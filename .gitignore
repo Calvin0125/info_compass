@@ -41,3 +41,6 @@ yarn-debug.log*
 
 # Ignore any db files
 .DS_Store
+
+# Ignore VCR cassettes
+vcr_cassettes

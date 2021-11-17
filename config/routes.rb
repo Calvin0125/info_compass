@@ -27,6 +27,4 @@ Rails.application.routes.draw do
 
   # routes under construction
   get '/news', to: 'news_topics#index', as: 'news_topics'
-  get '/music', to: 'music_artists#index', as: 'music_artists'
-  get '/books', to: 'authors#index', as: 'authors'
 end
