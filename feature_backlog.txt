@@ -7,3 +7,4 @@
    many duplicates, 2nd editions, and otherwise bad data. However, it sometimes misses books a user may want
    to see. In the future, I'd like to retrieve all of those and give the user the option to show the hidden
    results.
+7. Add an option for user to get email alerts when new items are added
