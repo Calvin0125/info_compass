@@ -44,4 +44,4 @@ yarn-debug.log*
 .DS_Store
 
 # Ignore VCR cassettes
-vcr_cassettes
+vcr_cassettes/
