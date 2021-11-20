@@ -1,3 +1,4 @@
 1. Feature test for resetting password 
 2. Add feature tests for research info modal, and updating status of articles. Selenium web driver wasn't working right and I needed to move on.
 3. Also add feature tests for research articles/search terms, they still use JS. 
+4. Make it so users are automatically logged out.
