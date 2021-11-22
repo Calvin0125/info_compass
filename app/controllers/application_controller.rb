@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::Base
+  
+  auto_session_timeout 1.hour
+
   def require_login
     if !helpers.logged_in?
       flash[:danger] = "You must be logged in to do that."

@@ -2,6 +2,8 @@ class SessionsController < ApplicationController
   before_action :require_no_login, only: [:new, :create]
   before_action :require_login, only: :destroy
 
+  auto_session_timeout_actions
+
   def new
   end
 

@@ -8,6 +8,8 @@
     = stylesheet_pack_tag "application"
     = javascript_pack_tag "application"
   %body.bg-info
+    - if logged_in?
+      = auto_session_timeout_js
     = render "shared/navigation" 
     = render "shared/messages"
     = yield
