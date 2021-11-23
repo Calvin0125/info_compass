@@ -2,7 +2,7 @@ require 'rails_helper.rb'
 
 describe SearchTerm do
   describe "associations" do
-    it { should belong_to(:research_topic) }
+    it { should belong_to(:topic) }
   end
   
   describe "validations" do
@@ -10,10 +10,10 @@ describe SearchTerm do
     it { should validate_uniqueness_of(:term).ignoring_case_sensitivity }
     it "shouldn't allow a topic to have more than 10 search terms" do
       user = Fabricate(:user)
-      topic = Fabricate(:research_topic, user_id: user.id)
-      10.times { |n| Fabricate(:search_term, research_topic_id: topic.id, id: n + 1) }
+      topic = Fabricate(:topic, user_id: user.id)
+      10.times { |n| Fabricate(:search_term, topic_id: topic.id, id: n + 1) }
       begin
-        Fabricate(:search_term, research_topic_id: topic.id, id: 11)
+        Fabricate(:search_term, topic_id: topic.id, id: 11)
       rescue
       end
       

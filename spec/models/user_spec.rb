@@ -6,7 +6,7 @@ describe User do
   end
 
   describe "associations" do
-    it { should have_many(:research_topics) }
+    it { should have_many(:topics) }
   end
 
   describe "validations" do

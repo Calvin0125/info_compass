@@ -11,15 +11,16 @@
           %h5.modal-title#topicModalLabel= "New Topic"
           %button.btn-close{ type: "button", data: { bs: { dismiss: "modal" } }, aria: { label: "Close" } }
         .modal-body
-          = form_for ResearchTopic.new, url: '/research_topics' do |f|
+          = form_for Topic.new, url: '/research_topics' do |f|
             .mb-3
               = f.label :title, class: "form-label"
               = f.text_field :title, class: "form-control mb-3"
               = f.label :search_terms, "Search Terms (add up to 5)", class: "form-label"
               - 5.times do |n|
                 = f.text_field :search_terms, value: "",  id: "searchTerm#{n}", name: "research_topic[search_terms][]", class: "form-control mb-2"
+              - f.hidden_field :category, value: "research"
               = f.submit "Add", class: "btn btn-primary"
-  - current_user.research_topics.each.with_index do |topic, topic_number|
+  - current_user.topics.where(category: "research").each.with_index do |topic, topic_number|
     .container-md.mb-3.px-0.py-3.border-top.border-dark.border-3.d-flex.flex-column.justify-content-center.d-md-block
       .modal{id: "topic-#{topic_number}-SearchTermModal", tabindex: "-1", aria: { labelledby: "searchTermModalLabel", hidden: "true" } }
         .modal-dialog

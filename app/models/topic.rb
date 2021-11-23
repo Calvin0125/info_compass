@@ -22,7 +22,7 @@ class Topic < ActiveRecord::Base
   end
   
   def refresh_new_articles
-    self.research_articles.where(status: "new").each do |article|
+    self.articles.where(status: "new").each do |article|
       article.destroy
     end
     self.add_new_articles
