@@ -3,12 +3,12 @@ class SearchTerm < ActiveRecord::Base
 
   before_save :downcase_term
 
-  belongs_to :research_topic
+  belongs_to :topic
 
   validates_presence_of :term 
   validates_uniqueness_of :term, case_insensitive: true
   validate on: :create do
-    if research_topic && research_topic.search_terms.length >= 10
+    if topic && topic.search_terms.length >= 10
       errors.add(:base, message: "You can't have more than 10 search terms per topic.")     
     end
   end

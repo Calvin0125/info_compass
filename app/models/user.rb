@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   has_secure_password
 
-  has_many :research_topics
+  has_many :topics
 
   validates_presence_of :username, :email
   validates :password, length: { minimum: 8 }, if: :password_required?

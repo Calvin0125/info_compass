@@ -19,8 +19,8 @@ class Arxiv
       article[:title] = entry.xpath('.//xmlns:title').text
       article[:author_csv] = author_csv(entry)
       article[:api] = 'arxiv'
-      article[:api_id] = entry.xpath('.//xmlns:id').text
-      article[:article_published] = entry.xpath('.//xmlns:published').text[0..9]
+      article[:url] = entry.xpath('.//xmlns:id').text
+      article[:date_published] = entry.xpath('.//xmlns:published').text[0..9]
       article[:article_updated] = entry.xpath('.//xmlns:updated').text[0..9]
       article[:status] = "new"
       article[:summary] = entry.xpath('.//xmlns:summary').text || "Summary not available"

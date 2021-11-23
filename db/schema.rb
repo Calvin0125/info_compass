@@ -10,38 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_13_123125) do
+ActiveRecord::Schema.define(version: 2021_11_23_133000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "research_articles", force: :cascade do |t|
+  create_table "articles", force: :cascade do |t|
     t.string "title"
     t.string "author_csv"
     t.string "summary"
     t.string "api"
-    t.string "api_id"
-    t.string "research_topic_id"
-    t.date "article_published"
+    t.string "url"
+    t.string "topic_id"
+    t.date "date_published"
     t.date "article_updated"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "notes"
     t.string "status"
-  end
-
-  create_table "research_topics", force: :cascade do |t|
-    t.string "title"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.integer "user_id"
+    t.string "source"
+    t.time "time_published"
   end
 
   create_table "search_terms", force: :cascade do |t|
     t.string "term"
-    t.integer "research_topic_id"
+    t.integer "topic_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "topics", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id"
+    t.string "category"
   end
 
   create_table "users", force: :cascade do |t|

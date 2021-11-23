@@ -6,23 +6,23 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 calvin = User.create(username: "Calvin123", email: "calvin@conley.com", password: "password")
-ai = ResearchTopic.create(title: "Artificial Intelligence", user_id: calvin.id)
-SearchTerm.create(research_topic_id: ai.id, term: "artificial intelligence")
-SearchTerm.create(research_topic_id: ai.id, term: "machine learning")
+ai = Topic.create(title: "Artificial Intelligence", category: "research", user_id: calvin.id)
+SearchTerm.create(topic_id: ai.id, term: "artificial intelligence")
+SearchTerm.create(topic_id: ai.id, term: "machine learning")
 
-synthetic_biology = ResearchTopic.create(title: "Synthetic Biology", user_id: calvin.id)
-SearchTerm.create(research_topic_id: synthetic_biology.id, term: "synthetic biology")
+synthetic_biology = Topic.create(title: "Synthetic Biology", category: "research", user_id: calvin.id)
+SearchTerm.create(topic_id: synthetic_biology.id, term: "synthetic biology")
 
-jellyfish = ResearchTopic.create(title: "Immortal Jellyfish", user_id: calvin.id)
-SearchTerm.create(research_topic_id: jellyfish.id, term: "immortal jellyfish")
-SearchTerm.create(research_topic_id: jellyfish.id, term: "turritopsis dohrnii")
+jellyfish = Topic.create(title: "Immortal Jellyfish", category: "research", user_id: calvin.id)
+SearchTerm.create(topic_id: jellyfish.id, term: "immortal jellyfish")
+SearchTerm.create(topic_id: jellyfish.id, term: "turritopsis dohrnii")
 
-ResearchTopic.add_new_articles
+Topic.add_new_articles
 
-ai.research_articles.order(id: :asc).limit(3).each { |article| article.update(status: "read") }
-ai.research_articles.order(id: :desc).limit(3).each { |article| article.update(status: "saved") }
+ai.articles.order(id: :asc).limit(3).each { |article| article.update(status: "read") }
+ai.articles.order(id: :desc).limit(3).each { |article| article.update(status: "saved") }
 
-synthetic_biology.research_articles.order(id: :asc).limit(3).each { |article| article.update(status: "read") }
-synthetic_biology.research_articles.order(id: :desc).limit(3).each { |article| article.update(status: "saved") }
+synthetic_biology.articles.order(id: :asc).limit(3).each { |article| article.update(status: "read") }
+synthetic_biology.articles.order(id: :desc).limit(3).each { |article| article.update(status: "saved") }
 
-ResearchTopic.add_new_articles
+Topic.add_new_articles
