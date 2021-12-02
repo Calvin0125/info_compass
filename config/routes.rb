@@ -2,8 +2,8 @@ Rails.application.routes.draw do
   get '/', to: 'pages#index', as: 'home'
 
 	resources :research_articles, only: [:update]
-  get '/research', to: 'research_topics#index', as: 'research_topics'
-  resources :research_topics, only: [:create, :update, :destroy]
+  get '/research', to: 'topics#research_index', as: 'research'
+  resources :topics, only: [:create, :update, :destroy]
   resources :search_terms, only: [:create, :destroy]
 
   resources :users, only: [:create, :update]
@@ -28,5 +28,5 @@ Rails.application.routes.draw do
   get "/500", to: "errors#error_500"
 
   # routes under construction
-  get '/news', to: 'news_topics#index', as: 'news_topics'
+  get '/news', to: 'topics#news_index', as: 'news'
 end

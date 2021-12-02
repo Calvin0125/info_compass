@@ -41,7 +41,7 @@ describe SessionsController do
 
         it "redirects to research topics page" do
           post :create, params: { username: @user.username, password: @user.password }
-          expect(response).to redirect_to research_topics_path
+          expect(response).to redirect_to research_path
         end
       end
 

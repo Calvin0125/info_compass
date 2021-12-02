@@ -7,7 +7,7 @@ class Topic < ActiveRecord::Base
   has_many :search_terms
   belongs_to :user
 
-  validates_presence_of :title
+  validates_presence_of :title, :category
   validates_uniqueness_of :title
   validate on: :create do
     if user && user.topics.length >= 25
