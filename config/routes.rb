@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get '/', to: 'pages#index', as: 'home'
 
-	resources :research_articles, only: [:update]
+	resources :articles, only: [:update]
   get '/research', to: 'topics#research_index', as: 'research'
   resources :topics, only: [:create, :update, :destroy]
   resources :search_terms, only: [:create, :destroy]

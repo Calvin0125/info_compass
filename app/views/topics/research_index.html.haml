@@ -1,6 +1,6 @@
 - if !current_user.visited_research_topics
   .d-none#showInfoModal
-%h1.mx-auto.text-center.mt-3= "Research Topics"
+%h1.mx-auto.text-center.mt-3= "Research"
 %h4.mx-auto.text-center.my-4= "Thank you to arXiv for use of its open access interoperability."
 .container-md.mx-auto.d-flex.flex-column.justify-content-center.d-md-block
   %button.mb-3.fs-5.btn.btn-primary.mx-auto{data: { bs: { toggle: "modal", target: "#addTopicModal" } } }= "Add Topic"
@@ -11,14 +11,14 @@
           %h5.modal-title#topicModalLabel= "New Topic"
           %button.btn-close{ type: "button", data: { bs: { dismiss: "modal" } }, aria: { label: "Close" } }
         .modal-body
-          = form_for Topic.new, url: '/research_topics' do |f|
+          = form_for Topic.new, url: '/topics' do |f|
             .mb-3
               = f.label :title, class: "form-label"
               = f.text_field :title, class: "form-control mb-3"
               = f.label :search_terms, "Search Terms (add up to 5)", class: "form-label"
               - 5.times do |n|
-                = f.text_field :search_terms, value: "",  id: "searchTerm#{n}", name: "research_topic[search_terms][]", class: "form-control mb-2"
-              - f.hidden_field :category, value: "research"
+                = f.text_field :search_terms, value: "",  id: "searchTerm#{n}", name: "topic[search_terms][]", class: "form-control mb-2"
+              = f.hidden_field :category, value: "research"
               = f.submit "Add", class: "btn btn-primary"
   - current_user.topics.where(category: "research").each.with_index do |topic, topic_number|
     .container-md.mb-3.px-0.py-3.border-top.border-dark.border-3.d-flex.flex-column.justify-content-center.d-md-block
@@ -33,7 +33,7 @@
                 .mb-3
                   = f.label :term, "New Term For #{topic.title}", class: "form-label" 
                   = f.text_field :term, class: "form-control mb-3"
-                  = f.hidden_field :research_topic_id, value: topic.id
+                  = f.hidden_field :topic_id, value: topic.id
                   = f.submit "Add", class: "btn btn-primary"
       %h2.text-center.text-md-start.mb-3= topic.title
       .row.justify-content-center.justify-content-md-start
@@ -49,7 +49,7 @@
                     %button.btn-close(type="submit" aria-label="Close")
             .col-auto
               %button.btn.btn-primary{ data: { bs: { toggle: "modal", target: "#topic-#{topic_number}-SearchTermModal" } } }= "Add Term"
-      - if topic.research_articles.length == 0
+      - if topic.articles.length == 0
         %h4.p-3.my-3.bg-secondary= "There were no articles found for your search."
       - else
         .accordion.my-3.bg-light{ id: "topic-#{topic_number}-articlesAccordion" }
@@ -57,21 +57,21 @@
             %h2.accordion-header{ id: "topic-#{topic_number}-new" }
               %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-newArticlesCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-newArticlesCollapse" } }
                 = "New"
-                %span.badge.bg-primary.ms-3= topic.research_articles.where(status: "new").length 
+                %span.badge.bg-primary.ms-3= topic.articles.where(status: "new").length 
                 - if topic.new_today_count > 0
                   %span.ms-3.text-success= "#{topic.new_today_count} New Today"
             .collapse.accordion-collapse{ id: "topic-#{topic_number}-newArticlesCollapse" , aria: { labelledby: "topic-#{topic_number}-new" } }
               .accordion-body
                 .accordion{ id: "topic-#{topic_number}-newAccordion" }
-                  - if topic.research_articles.where(status: "new").length == 0
+                  - if topic.articles.where(status: "new").length == 0
                     %p= "It looks like there aren't any articles you haven't seen before. Try adding a new search term for more results."
-                  - topic.research_articles.where(status: "new").each.with_index do |article, article_number|
+                  - topic.articles.where(status: "new").each.with_index do |article, article_number|
                     .accordion-item
                       %h2.accordion-header{ id: "topic-#{topic_number}-newArticle-#{article_number}" }
                         %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-newArticle-#{article_number}-collapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-newArticle-#{article_number}-collapse" } }
                           .container
                             .row= article.title
-                            .row.mt-3.text-muted= article.article_published
+                            .row.mt-3.text-muted= article.date_published
                       .collapse.accordion-collapse{ id: "topic-#{topic_number}-newArticle-#{article_number}-collapse", aria: { labelledby: "topic-#{topic_number}-newArticle-#{article_number}" } }
                         .accordion-body
                           = render 'shared/research_article', article: article
@@ -79,17 +79,17 @@
             %h2.accordion-header{ id: "topic-#{topic_number}-saved" }
               %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-savedArticlesCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-savedArticlesCollapse" } }
                 = "Saved"
-                %span.badge.bg-primary.ms-3= topic.research_articles.where(status: "saved").length 
+                %span.badge.bg-primary.ms-3= topic.articles.where(status: "saved").length 
             .collapse.accordion-collapse{ id: "topic-#{topic_number}-savedArticlesCollapse", aria: { labelledby: "topic-#{topic_number}-saved" } }
               .accordion-body
                 .accordion.bg-light{ id: "topic-#{topic_number}-savedAccordion" }
-                  - topic.research_articles.where(status: "saved").each.with_index do |article, article_number|
+                  - topic.articles.where(status: "saved").each.with_index do |article, article_number|
                     .accordion-item
                       %h2.accordion-header{ id: "topic-#{topic_number}-savedArticle-#{article_number}" }
                         %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-savedArticle-#{article_number}-collapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-savedArticle-#{article_number}-collapse" } }
                           .container
                             .row= article.title
-                            .row.mt-3.text-muted= article.article_published
+                            .row.mt-3.text-muted= article.date_published
                       .collapse.accordion-collapse{ id: "topic-#{topic_number}-savedArticle-#{article_number}-collapse", aria: { labelledby: "topic-#{topic_number}-savedArticle-#{article_number}" } }
                         .accordion-body
                           = render 'shared/research_article', article: article
@@ -97,17 +97,17 @@
             %h2.accordion-header{ id: "topic-#{topic_number}-read" }
               %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-readArticlesCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-readArticlesCollapse" } }
                 = "Read"
-                %span.ms-3.badge.bg-primary= topic.research_articles.where(status: "read").length  
+                %span.ms-3.badge.bg-primary= topic.articles.where(status: "read").length  
             .collapse.accordion-collapse{ id: "topic-#{topic_number}-readArticlesCollapse", aria: { labelledby: "topic-#{topic_number}-read" } }
               .accordion-body
                 .accordion{ id: "topic-#{topic_number}-readAccordion" }
-                  - topic.research_articles.where(status: "read").each.with_index do |article, article_number|
+                  - topic.articles.where(status: "read").each.with_index do |article, article_number|
                     .accordion-item
                       %h2.accordion-header{ id: "topic-#{topic_number}-readArticle-#{article_number}" }
                         %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-readArticle-#{article_number}-collapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-readArticle-#{article_number}-collapse" } }
                           .container
                             .row= article.title
-                            .row.mt-3.text-muted= article.article_published
+                            .row.mt-3.text-muted= article.date_published
                       .collapse.accordion-collapse{ id: "topic-#{topic_number}-readArticle-#{article_number}-collapse", aria: { labelledby: "topic-#{topic_number}-readArticle-#{article_number}" } }
                         .accordion-body
                           = render 'shared/research_article', article: article
@@ -130,7 +130,7 @@
         .modal-title.h4.text-dark#infoModalLabel= "About Research Topics Page"
         %button.btn-close{ type: "button", data: { bs: { dismiss: "modal" } }, aria: { label: "Close" } }
       .modal-body
-        %p.fs-5.mb-3.text-dark= "- On this page you can add as many research topics as you like."
+        %p.fs-5.mb-3.text-dark= "- On this page you can add up to 25 research topics."
         %p.fs-5.mb-3.text-dark= "- Every 24 hours, the arXiv API is queried with the search terms you provide."
         %p.fs-5.mb-3.text-dark= "- arXiv contains nearly 2 million scholarly articles in various academic fields."
         %p.fs-5.mb-3.text-dark= "- The 10 most recent articles will appear in the 'new' section of each topic every day."
