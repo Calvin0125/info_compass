@@ -4,3 +4,4 @@
 4. Show university affiliation and journal reference for research papers
 5. Add a stats page that shows how many papers/articles were published per day over time
 6. Show 10 most recent or all research papers published today up to 100.
+7. Use background jobs for the API calls and add a loading screen
