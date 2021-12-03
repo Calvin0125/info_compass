@@ -58,8 +58,8 @@
               %button.accordion-button.collapsed{ type: "button", data: { bs: { toggle: "collapse", target: "#topic-#{topic_number}-newArticlesCollapse" } }, aria: { expanded: "false", controls: "topic-#{topic_number}-newArticlesCollapse" } }
                 = "New"
                 %span.badge.bg-primary.ms-3= topic.articles.where(status: "new").length 
-                - if topic.new_today_count > 0
-                  %span.ms-3.text-success= "#{topic.new_today_count} New Today"
+                - if topic.research_new_today_count > 0
+                  %span.ms-3.text-success= "#{topic.research_new_today_count} New Today"
             .collapse.accordion-collapse{ id: "topic-#{topic_number}-newArticlesCollapse" , aria: { labelledby: "topic-#{topic_number}-new" } }
               .accordion-body
                 .accordion{ id: "topic-#{topic_number}-newAccordion" }
