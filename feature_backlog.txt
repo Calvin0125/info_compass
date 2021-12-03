@@ -1,5 +1,6 @@
 1. Feature test for resetting password 
 2. Add feature tests for research info modal, and updating status of articles. Selenium web driver wasn't working right and I needed to move on.
 3. Also add feature tests for research articles/search terms, they still use JS. 
-4. Make it so users are automatically logged out.
+4. Show university affiliation and journal reference for research papers
 5. Add a stats page that shows how many papers/articles were published per day over time
+6. Show 10 most recent or all research papers published today up to 100.
