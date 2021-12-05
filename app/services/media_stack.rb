@@ -1,7 +1,7 @@
 require 'faraday'
 
 class MediaStack
-  def self.get_todays_articles(search_terms, page)
+  def self.get_one_hundred_articles(search_terms, page)
     response = self.request(search_terms, page)
     self.format(response)
   end
@@ -37,8 +37,9 @@ class MediaStack
       formatted_article[:url] = article["url"]
       formatted_article[:api] = "media_stack"
       formatted_article[:date_published] = get_date(article["published_at"])
-      formatted_article[:time_published] = get_time(article["published_at"])
+      formatted_article[:time_published] = article["published_at"]
       formatted_article[:source] = article["source"]
+      formatted_article[:status] = "new"
       articles.push(formatted_article)
     end
     articles
@@ -51,11 +52,6 @@ class MediaStack
   def self.get_date(date_time_string)
     # string format 2020-01-01T05:30:24+00:00
     date_time_string.split("T")[0]
-  end
-
-  def self.get_time(date_time_string)
-    milliseconds_time = date_time_string.split("T")[1]
-    milliseconds_time.split("+")[0]
   end
 
   def self.log_request
