@@ -58,20 +58,20 @@ describe Topic do
       articles.each { |article| expect(new_articles).not_to include(article) }
     end
 
-    it "adds 10 new articles" do
+    it "adds at least 10 new research articles" do
       topic = Fabricate(:topic, user_id: Fabricate(:user).id, category: "research") 
       Fabricate(:search_term, term: "crispr", topic_id: topic.id)
       5.times { |n| Fabricate(:article, id: n, topic_id: topic.id) }
       topic.refresh_new_articles
-      expect(Article.count).to eq(10)
+      expect(Article.count).to be >= 10
     end
   end
 
-  describe "::add_new_articles", vcr: { re_record_interval: 7.days } do
+  describe "::add_new_research_articles", vcr: { re_record_interval: 7.days } do
     it "loads new research articles in database" do
       topic = Fabricate(:topic, user_id: Fabricate(:user).id)
       Fabricate(:search_term, topic_id: topic.id, term: "artificial intelligence")
-      Topic.add_new_articles
+      Topic.add_new_research_articles
       expect(Article.count).to be >= 10
     end
     
@@ -80,7 +80,7 @@ describe Topic do
       topic2 = Fabricate(:topic, id: 2, user_id: Fabricate(:user).id)
       Fabricate(:search_term, topic_id: topic1.id, id: 1, term: "artificial intelligence")
       Fabricate(:search_term, topic_id: topic2.id, id: 2, term: "synthetic biology")
-      Topic.add_new_articles
+      Topic.add_new_research_articles
       expect(Article.count).to be >= 20
     end
 
@@ -88,8 +88,9 @@ describe Topic do
       topic = Fabricate(:topic, user_id: Fabricate(:user).id)
       3.times {|n| Fabricate(:article, date_published: '2021-01-01', topic_id: topic.id, id: n + 1) }
       Fabricate(:search_term, topic_id: topic.id, term: "artificial intelligence")
-      Topic.add_new_articles
-      expect(Article.count).to eq(10)
+      Topic.add_new_research_articles
+      expect(Article.count).to be >= 10
+      expect(Article.count).to be <= 50
       expect(Article.where(id: 2).length).to eq(0)
     end
 
@@ -103,7 +104,7 @@ describe Topic do
       Fabricate(:article, topic_id: topic.id, api: 'arxiv',
       url: url1, status: "read", id: 2)
       Fabricate(:search_term, topic_id: topic.id, term: "black holes")
-      Topic.add_new_articles
+      Topic.add_new_research_articles
       expect(Article.count).to be >= 12
     end
 
@@ -114,19 +115,19 @@ describe Topic do
       Fabricate(:article, topic_id: topic.id, api: 'arxiv', 
       url: url, status: "read")
       Fabricate(:search_term, topic_id: topic.id, term: "black holes")
-      Topic.add_new_articles
+      Topic.add_new_research_articles
       expect(topic.articles.where(api: 'arxiv', url: url).length).to eq(1) 
     end
   end
 
-  describe "#new_today_count" do
+  describe "#research_new_today_count" do
     it "returns the number of articles that are new today(were published yesterday)" do
       user = Fabricate(:user)
       topic = Fabricate(:topic, user_id: user.id)
       article1 = Fabricate(:article, topic_id: topic.id, date_published: Date.yesterday.strftime("%F"))
       article2 = Fabricate(:article, topic_id: topic.id, date_published: Date.yesterday.strftime("%F"), id: 2)
       article3 = Fabricate(:article, topic_id: topic.id, date_published: '2021-01-01', id: 3) 
-      expect(topic.new_today_count).to eq(2)
+      expect(topic.research_new_today_count).to eq(2)
     end
 
     it "doesn't count articles that are saved or read" do
@@ -137,7 +138,7 @@ describe Topic do
       article3 = Fabricate(:article, topic_id: topic.id, date_published: '2021-01-01', id: 3) 
       article4 = Fabricate(:article, topic_id: topic.id, date_published: Date.yesterday.strftime("%F"), status: "read", id: 4)
       article5 = Fabricate(:article, topic_id: topic.id, date_published: Date.yesterday.strftime("%F"), status: "saved", id: 5)
-      expect(topic.new_today_count).to eq(2)
+      expect(topic.research_new_today_count).to eq(2)
     end
   end
 end

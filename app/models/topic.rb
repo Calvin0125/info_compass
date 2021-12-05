@@ -28,19 +28,27 @@ class Topic < ActiveRecord::Base
     end
     self.add_new_articles
   end
-  
+
   def add_new_articles
+    if self.category == "research"
+      self.add_new_research_articles
+    elsif self.category == "news"    
+      return true
+    end
+  end
+  
+  def add_new_research_articles
     search_terms = self.search_terms.map(&:term)
     return if search_terms == []
 
-    self.get_todays_articles_up_to_50(search_terms)
-    self.ensure_at_least_10_articles(search_terms)
+    self.get_todays_research_articles_up_to_50(search_terms)
+    self.ensure_at_least_10_research_articles(search_terms)
     # if user did not read or save articles added yesterday
     # they will be replaced by the new articles added today
-    self.remove_old_articles_marked_new
+    self.remove_old_research_articles_marked_new
   end
 
-  def remove_old_articles_marked_new
+  def remove_old_research_articles_marked_new
     while self.articles.where(status: "new").length > 10
       article = self.articles.where(status: "new").except(:order).order(date_published: :asc).first
       break if published_yesterday(article)
@@ -48,7 +56,7 @@ class Topic < ActiveRecord::Base
     end
   end
 
-  def ensure_at_least_10_articles(search_terms)
+  def ensure_at_least_10_research_articles(search_terms)
     page = 0
     while self.articles.where(status: "new").length < 10    
       articles = self.process_next_ten_articles(search_terms, page)
@@ -58,7 +66,7 @@ class Topic < ActiveRecord::Base
     end
   end
 
-  def get_todays_articles_up_to_50(search_terms)
+  def get_todays_research_articles_up_to_50(search_terms)
     page = 0
     loop do
       articles = Arxiv.get_ten_articles(search_terms, page)
@@ -70,7 +78,7 @@ class Topic < ActiveRecord::Base
         end
       end
 
-      if !published_yesterday(articles[9]) || articles.length < 10 ||
+      if articles.length < 10 || !published_yesterday(articles[9]) ||
          self.research_new_today_count >= 50 
         break
       end
