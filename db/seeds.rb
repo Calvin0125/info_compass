@@ -17,7 +17,7 @@ jellyfish = Topic.create(title: "Immortal Jellyfish", category: "research", user
 SearchTerm.create(topic_id: jellyfish.id, term: "immortal jellyfish")
 SearchTerm.create(topic_id: jellyfish.id, term: "turritopsis dohrnii")
 
-Topic.add_new_articles
+Topic.add_new_research_articles
 
 ai.articles.order(id: :asc).limit(3).each { |article| article.update(status: "read") }
 ai.articles.order(id: :desc).limit(3).each { |article| article.update(status: "saved") }
@@ -25,4 +25,23 @@ ai.articles.order(id: :desc).limit(3).each { |article| article.update(status: "s
 synthetic_biology.articles.order(id: :asc).limit(3).each { |article| article.update(status: "read") }
 synthetic_biology.articles.order(id: :desc).limit(3).each { |article| article.update(status: "saved") }
 
-Topic.add_new_articles
+Topic.add_new_research_articles
+
+facebook = Topic.create(title: "Facebook Metaverse", category: "news", user_id: calvin.id)
+SearchTerm.create(topic_id: facebook.id, term: "facebook metaverse")
+facebook.add_new_articles
+facebook.articles.order(id: :asc).limit(3).each { |article| article.update(status: "read") }
+facebook.articles.order(id: :desc).limit(3).each { |article| article.update(status: "saved") }
+facebook.add_new_articles
+
+bitcoin = Topic.create(title: "Bitcoin", category: "news", user_id: calvin.id)
+SearchTerm.create(topic_id: bitcoin.id, term: "bitcoin")
+bitcoin.add_new_articles
+bitcoin.articles.order(id: :asc).limit(3).each { |article| article.update(status: "read") }
+bitcoin.articles.order(id: :desc).limit(3).each { |article| article.update(status: "saved") }
+bitcoin.add_new_articles
+
+no_articles_found = Topic.create(title: "No Articles Found", category: "news", user_id: calvin.id)
+SearchTerm.create(topic_id: no_articles_found.id, term: "aoinfkciwowrasodfijwowlsdifiazoismfoidijwoinfaoiasiodfnd")
+no_articles_found.add_new_articles
+byebug
