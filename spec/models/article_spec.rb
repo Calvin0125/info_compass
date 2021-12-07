@@ -31,4 +31,30 @@ describe Article do
      expect(topic.articles.all.order('date_published DESC, time_published DESC, title')).to eq(topic.articles.all)
    end
  end
+
+ describe "#pretty_time_published" do
+   before :each do
+     @user = Fabricate(:user)
+     @topic = Fabricate(:topic, user_id: @user.id)
+   end
+
+   it "returns nil if there is no time published (ie. for research articles)" do
+     article = Fabricate(:article, topic_id: @topic.id)  
+     expect(article.pretty_time_published("Mountain Time (US & Canada)")).to eq(nil)
+   end
+
+   it "returns pretty time in correct time zone" do
+     article = Fabricate(:article, topic_id: @topic.id, time_published: "2021-12-07T21:25:27+00:00")
+     # Must use in_time_zone because manually entering the time as a string
+     # will cause tests to fail during daylight savings time
+     correct_time = Time.parse("21:25 UTC").in_time_zone("Eastern Time (US & Canada)").strftime("%l:%M %p").strip
+     expect(article.pretty_time_published("Eastern Time (US & Canada)")).to eq(correct_time)
+   end
+
+   it "returns another pretty time in correct time zone" do
+     article = Fabricate(:article, topic_id: @topic.id, time_published: "2021-12-07T11:50:35+00:00")
+     correct_time = Time.parse("11:50 UTC").in_time_zone("Pacific Time (US & Canada)").strftime("%l:%M %p").strip
+     expect(article.pretty_time_published("Pacific Time (US & Canada)")).to eq(correct_time)
+   end
+ end
 end
