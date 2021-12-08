@@ -5,6 +5,7 @@
       = link_to "Edit Details", edit_account_path, class: "btn btn-primary mb-4"
       %h5.mb-3= "Username: #{@user.username}"
       %h5.mb-3= "Email: #{@user.email}"
+      %h5.mb-3= "Time Zone: #{@user.time_zone}"
     .col-md-5
       = image_tag "compass.png", alt: "compass", class: "img-fluid"
 = render 'shared/info_modal_main' 

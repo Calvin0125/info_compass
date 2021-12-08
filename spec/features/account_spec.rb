@@ -27,6 +27,7 @@ feature "Account" do
     fill_in "Email", with: "user@internet.com"
     fill_in "Username", with: "User123"
     fill_in "Password", with: "password"
+    select "Eastern Time (US & Canada)", from: "user_time_zone"
     click_button "Create Account"
     expect(page).to have_content("Your account has been created, please log in.")
   end
@@ -40,9 +41,11 @@ feature "Account" do
     fill_in "Username", with: "User123"
     fill_in "Email", with: ""
     fill_in "Email", with: "user123@email.com"
+    select "Paris", from: "user_time_zone"
     fill_in "Current Password", with: "password"
     click_button "Update"
     expect(page).to have_content("Username: User123")
     expect(page).to have_content("Email: user123@email.com")
+    expect(page).to have_content("Time Zone: Paris")
   end
 end

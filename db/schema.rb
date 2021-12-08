@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_03_142611) do
+ActiveRecord::Schema.define(version: 2021_12_08_113831) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 2021_12_03_142611) do
     t.boolean "visited_research_topics", default: false
     t.string "slug"
     t.string "token"
+    t.string "time_zone"
   end
 
 end

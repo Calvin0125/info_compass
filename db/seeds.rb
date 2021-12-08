@@ -5,7 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-calvin = User.create(username: "Calvin123", email: "calvin@conley.com", password: "password")
+calvin = User.create(username: "Calvin123", email: "calvin@conley.com", time_zone: "Eastern Time (US & Canada)", password: "password")
 ai = Topic.create(title: "Artificial Intelligence", category: "research", user_id: calvin.id)
 SearchTerm.create(topic_id: ai.id, term: "artificial intelligence")
 SearchTerm.create(topic_id: ai.id, term: "machine learning")

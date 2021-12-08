@@ -32,6 +32,7 @@ class UsersController < ApplicationController
     elsif !@user.authenticate(params[:user][:password])
       @user.username = params[:user][:username]
       @user.email = params[:user][:email]
+      @user.time_zone = params[:user][:time_zone]
       @user.errors.add(:password, "is incorrect.")
       render :edit
     elsif @user.update(user_params)
@@ -81,6 +82,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:username, :email, :password)
+    params.require(:user).permit(:username, :email, :time_zone, :password)
   end
 end

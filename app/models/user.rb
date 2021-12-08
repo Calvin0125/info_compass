@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
   has_many :topics
 
-  validates_presence_of :username, :email
+  validates_presence_of :username, :email, :time_zone
   validates :password, length: { minimum: 8 }, if: :password_required?
   validates_uniqueness_of :email, :username
 
