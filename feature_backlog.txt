@@ -3,8 +3,8 @@
 3. Also add feature tests for research articles/search terms, they still use JS. 
 4. Show university affiliation and journal reference for research papers
 5. Add error handling for both APIs
-6. Add a stats page that shows how many papers/articles were published per day over time
-7. Use background jobs for the API calls and add a loading screen
+6. Use background jobs for the API calls and add a loading screen
+7. Add a stats page that shows how many papers/articles were published per day over time
 8. Allow users to schedule when they want news queried
 9. Add email alerts
 
