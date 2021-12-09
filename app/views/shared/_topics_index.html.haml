@@ -55,6 +55,9 @@
                     %button.btn-close(type="submit" aria-label="Close")
             .col-auto
               %button.btn.btn-primary{ data: { bs: { toggle: "modal", target: "#topic-#{topic_number}-SearchTermModal" } } }= "Add Term"
+      = form_tag('/articles') do
+        = hidden_field_tag 'topic_id', topic.id
+        %button.btn.btn-primary= "Get New Articles"
       - if topic.articles.length == 0
         %h4.p-3.my-3.bg-secondary= "There were no articles found for your search."
       - else
