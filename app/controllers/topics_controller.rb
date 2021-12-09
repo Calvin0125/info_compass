@@ -29,7 +29,12 @@ class TopicsController < ApplicationController
     else
       flash[:danger] = topic.errors.full_messages.join(" ")
     end
-    redirect_to research_path
+
+    if category == "research"
+      redirect_to research_path
+    elsif category == "news"
+      redirect_to news_path
+    end
   end
   
   def destroy

@@ -71,9 +71,14 @@ describe TopicsController do
         expect(@user.topics.first.articles.count).to eq(10)
       end
 
-      it "redirects to research topics index page", vcr: { re_record_interval: 7.days } do
+      it "redirects to research path if category is research", vcr: { re_record_interval: 7.days } do
         post :create, @params
         expect(response).to redirect_to(research_path)
+      end
+
+      it "redirects to news path if category is news", vcr: { re_record_interval: 7.days } do
+        post :create, params: { topic: { title: "Bitcoin", category: "news", search_terms: ["bitcoin", "", "", "", ""] } }
+        expect(response).to redirect_to(news_path)
       end
     end
   end
