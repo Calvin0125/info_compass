@@ -7,6 +7,8 @@
   %h1.mx-auto.text-center.mt-3= "News"
   %h4.mx-auto.text-center.my-4= "Thank you to Media Stack for use of its free API."  
 .container-md.mx-auto.d-flex.flex-column.justify-content-center.d-md-block
+  %h3.mb-3.text-center.mx-auto= "Requests Used Today: #{current_user.todays_query_count(category)}"
+  %h3.mb-5.text-center.mx-auto= "Requests Remaining Today: #{25 - current_user.todays_query_count(category)}"
   %button.mb-3.fs-5.btn.btn-primary.mx-auto{data: { bs: { toggle: "modal", target: "#addTopicModal" } } }= "Add Topic"
   .modal#addTopicModal{ tabindex: "-1", aria: { labelledby: "topicModalLabel", hidden: "true" } }
     .modal-dialog
