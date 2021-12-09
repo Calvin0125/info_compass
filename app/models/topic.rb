@@ -30,6 +30,8 @@ class Topic < ActiveRecord::Base
   end
 
   def add_new_articles
+    self.user.add_query(self.category)
+
     if self.category == "research"
       self.add_new_research_articles
     elsif self.category == "news"    

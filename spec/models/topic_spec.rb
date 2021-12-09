@@ -67,6 +67,65 @@ describe Topic do
     end
   end
 
+  describe "#add_new_articles", vcr: { re_record_interval: 7.days } do
+    # #add_new_articles just calls #add_new_research_articles or
+    # #add_new_news_articles based on self.category and that behavior
+    # is already tested. This is just to make sure queries are being 
+    # tallied for the user associated with the topic
+    
+    context "research" do
+      it "adds one to query count if first query of the day" do
+        topic = Fabricate(:topic, user_id: Fabricate(:user).id, category: "research")
+        Fabricate(:search_term, topic_id: topic.id, term: "artificial intelligence")
+        topic.add_new_articles
+        expect(topic.user.todays_query_count("research")).to eq(1)
+      end
+
+      it "does not add one to the wrong query type" do
+        topic = Fabricate(:topic, user_id: Fabricate(:user).id, category: "research")
+        Fabricate(:search_term, topic_id: topic.id, term: "artificial intelligence")
+        topic.add_new_articles
+        expect(topic.user.todays_query_count("news")).to eq(0)
+      end
+
+      it "adds one to query count" do
+        user = Fabricate(:user)
+        date = Time.now.in_time_zone(user.time_zone).strftime("%F")
+        ApiQuery.create(user_id: user.id, date: date, query_type: "research", query_count: 15)
+        topic = Fabricate(:topic, user_id: user.id, category: "research")
+        Fabricate(:search_term, topic_id: topic.id, term: "artificial intelligence")
+        topic.add_new_articles
+        expect(topic.user.todays_query_count("research")).to eq(16)
+      end
+    end
+
+    context "news" do
+      it "adds one to query count if first query of the day" do
+        topic = Fabricate(:topic, user_id: Fabricate(:user).id, category: "news")
+        Fabricate(:search_term, topic_id: topic.id, term: "bitcoin")
+        topic.add_new_articles
+        expect(topic.user.todays_query_count("news")).to eq(1)
+      end
+
+      it "does not add one to the wrong query type" do
+        topic = Fabricate(:topic, user_id: Fabricate(:user).id, category: "news")
+        Fabricate(:search_term, topic_id: topic.id, term: "bitcoin")
+        topic.add_new_articles
+        expect(topic.user.todays_query_count("research")).to eq(0)
+      end
+
+      it "adds one to query count" do
+        user = Fabricate(:user)
+        date = Time.now.in_time_zone(user.time_zone).strftime("%F")
+        ApiQuery.create(user_id: user.id, date: date, query_type: "news", query_count: 15)
+        topic = Fabricate(:topic, user_id: user.id, category: "news")
+        Fabricate(:search_term, topic_id: topic.id, term: "bitcoin")
+        topic.add_new_articles
+        expect(topic.user.todays_query_count("news")).to eq(16)
+      end
+    end
+  end
+
   describe "#add_new_news_articles", vcr: { re_record_interval: 7.days } do
     it "adds at least 25 new news articles" do
       topic = Fabricate(:topic, user_id: Fabricate(:user).id, category: "news")
