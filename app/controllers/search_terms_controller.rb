@@ -12,7 +12,11 @@ class SearchTermsController < ApplicationController
       flash[:danger] = "You can only add search terms to topics that belong to you."
     end
 
-    redirect_to research_path
+    if topic.category == "research"
+      redirect_to research_path
+    elsif topic.category == "news"
+      redirect_to news_path
+    end
   end
 
   def destroy
@@ -24,7 +28,12 @@ class SearchTermsController < ApplicationController
     else
       flash[:danger] = "You can only delete search terms for topics that belong to you."
     end
-    redirect_to research_path
+
+    if topic.category == "research"
+      redirect_to research_path
+    elsif topic.category == "news"
+      redirect_to news_path
+    end
   end
 
   private

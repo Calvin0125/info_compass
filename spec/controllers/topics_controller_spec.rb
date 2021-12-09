@@ -108,10 +108,16 @@ describe TopicsController do
         expect(Topic.all.count).to eq(1)
       end
 
-      it "redirects to research topics index page" do
+      it "redirects to research topics index page if category is research" do
         topic = Fabricate(:topic, user_id: @user.id)
         delete :destroy, params: { id: topic.id }
         expect(response).to redirect_to research_path 
+      end
+
+      it "redirects to news topics index page if category is news" do
+        topic = Fabricate(:topic, category: "news", user_id: @user.id)
+        delete :destroy, params: { id: topic.id }
+        expect(response).to redirect_to news_path
       end
     end
   end

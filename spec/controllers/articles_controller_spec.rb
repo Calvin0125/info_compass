@@ -81,14 +81,14 @@ describe ArticlesController do
       end
 
       it "won't let user query news articles more than 25 times" do
-        NewsQuery.create(user_id: @user.id, date: Date.today, query_count: 25)
+        ApiQuery.create(user_id: @user.id, date: Date.today, query_type: "news", query_count: 25)
         post :create, params: { topic_id: @topic.id }
         expect(@topic.articles.length).to eq(0)
-        expect(@user.todays_news_query_count).to eq(25)
+        expect(@user.todays_query_count("news")).to eq(25)
       end
 
       it "sets the flash warning if user tries to query news articles more than 25 times" do
-        NewsQuery.create(user_id: @user.id, date: Date.today, query_count: 25)
+        ApiQuery.create(user_id: @user.id, date: Date.today, query_type: "news", query_count: 25)
         post :create, params: { topic_id: @topic.id }
         expect(flash[:danger]).to eq("You can only request new articles 25 times per day.")
       end
@@ -98,7 +98,7 @@ describe ArticlesController do
         other_topic = Fabricate(:topic, category: "news", user_id: other_user.id, id: 2)
         post :create, params: { topic_id: other_topic.id }
         expect(other_topic.articles.length).to eq(0)
-        expect(other_user.todays_news_query_count).to eq(0)
+        expect(other_user.todays_query_count("news")).to eq(0)
       end
 
       it "sets a flash warning if user tries to request articles for a topic that belongs to a different user" do

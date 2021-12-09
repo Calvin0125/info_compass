@@ -36,14 +36,22 @@ describe SearchTermsController do
       expect(flash[:danger]).to eq("You can only add search terms to topics that belong to you.") 
     end
 
-    it "redirects to research topics index", vcr: { re_record_interval: 7.days } do
+    it "redirects to research topics index if the category if research", vcr: { re_record_interval: 7.days } do
       user = Fabricate(:user)
       login(user)
       topic = Fabricate(:topic, user_id: user.id)
       post :create, params: { search_term: { term: "crispr", topic_id: topic.id } }
       expect(response).to redirect_to research_path
     end
-    
+
+    it "redirects to research topics index if the category if news", vcr: { re_record_interval: 7.days } do
+      user = Fabricate(:user)
+      login(user)
+      topic = Fabricate(:topic, category: "news", user_id: user.id)
+      post :create, params: { search_term: { term: "bitcoin", topic_id: topic.id } }
+      expect(response).to redirect_to news_path
+    end
+   
     it "refreshes new articles for the associated topic", vcr: { re_record_interval: 7.days } do
       user = Fabricate(:user)
       login(user)
@@ -83,13 +91,22 @@ describe SearchTermsController do
       expect(flash[:danger]).to eq("You can only delete search terms for topics that belong to you.")
     end
 
-    it "redirects to the topics index page", vcr: { re_record_interval: 7.days } do
+    it "redirects to the research page if category is research", vcr: { re_record_interval: 7.days } do
       user = Fabricate(:user)
       login(user)
       topic = Fabricate(:topic, user_id: user.id)
       term = Fabricate(:search_term, topic_id: topic.id)
       delete :destroy, params: { id: term.id.to_s }
       expect(response).to redirect_to(research_path)
+    end
+
+    it "redirects to the news page if category is news", vcr: { re_record_interval: 7.days } do
+      user = Fabricate(:user)
+      login(user)
+      topic = Fabricate(:topic, category: "news", user_id: user.id)
+      term = Fabricate(:search_term, topic_id: topic.id)
+      delete :destroy, params: { id: term.id.to_s }
+      expect(response).to redirect_to(news_path)
     end
 
     it "refreshes new articles on the associated topic", vcr: { re_record_interval: 7.days } do

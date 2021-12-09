@@ -43,6 +43,10 @@ class TopicsController < ApplicationController
       topic.destroy
     end
 
-    redirect_to research_path
+    if topic.category == "research"
+      redirect_to research_path
+    elsif topic.category == "news"
+      redirect_to news_path
+    end
   end
 end
