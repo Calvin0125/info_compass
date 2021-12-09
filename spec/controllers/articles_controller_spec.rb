@@ -41,11 +41,20 @@ describe ArticlesController do
         expect(article.notes).to eq(notes)
       end
 
-      it "redirects to research topics path" do
+      it "redirects to research topics path if category is research" do
         article = fabricate_research_article(9)
         login(article.topic.user)
         put :update, params: { article: { notes: "New notes" }, id: 9 }
         expect(response).to redirect_to research_path
+      end
+
+      it "redirects to news path if category is news" do
+        user = Fabricate(:user)
+        topic = Fabricate(:topic, category: "news", user_id: user.id)
+        article = Fabricate(:article, topic_id: topic.id)
+        login(user)
+        put :update, params: { article: { notes: "New notes"}, id: article.id }
+        expect(response).to redirect_to news_path
       end
     end
   end
@@ -71,18 +80,6 @@ describe ArticlesController do
         expect(@topic.articles.length).to be >= 25
       end
 
-      it "sets user query count of 1 if first query of day" do
-        post :create, params: { topic_id: @topic.id }
-        @user.reload
-        expect(@user.todays_news_query_count).to eq(1)
-      end
-      
-      it "adds 1 to user query count" do
-        NewsQuery.create(user_id: @user.id, date: Date.today, query_count: 10)
-        post :create, params: { topic_id: @topic.id }
-        expect(@user.todays_news_query_count).to eq(11)
-      end
-
       it "won't let user query news articles more than 25 times" do
         NewsQuery.create(user_id: @user.id, date: Date.today, query_count: 25)
         post :create, params: { topic_id: @topic.id }
@@ -93,7 +90,7 @@ describe ArticlesController do
       it "sets the flash warning if user tries to query news articles more than 25 times" do
         NewsQuery.create(user_id: @user.id, date: Date.today, query_count: 25)
         post :create, params: { topic_id: @topic.id }
-        expect(flash[:danger]).to eq("You can only request new news articles 25 times per day.")
+        expect(flash[:danger]).to eq("You can only request new articles 25 times per day.")
       end
 
       it "won't let user request articles for a topic that belongs to a different user" do
@@ -111,7 +108,13 @@ describe ArticlesController do
         expect(flash[:danger]).to eq("You can only request articles for topics that belong to you.")
       end
 
-      it "redirects to news path" do
+      it "redirects to research path if category is researh" do
+        @topic.update(category: "research")
+        post :create, params: { topic_id: @topic.id }
+        expect(response).to redirect_to(research_path)
+      end
+
+      it "redirects to news path if category is news" do
         post :create, params: { topic_id: @topic.id }
         expect(response).to redirect_to(news_path)
       end

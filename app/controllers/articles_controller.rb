@@ -8,13 +8,17 @@ class ArticlesController < ApplicationController
     if topic.user != user
       flash[:danger] = "You can only request articles for topics that belong to you."
     elsif user.todays_news_query_count >= 25
-      flash[:danger] = "You can only request new news articles 25 times per day."
+      flash[:danger] = "You can only request new articles 25 times per day."
     else
       topic.add_new_articles
       user.add_news_query
     end
 
-    redirect_to news_path
+    if topic.category == "news"
+      redirect_to news_path
+    elsif topic.category == "research"
+      redirect_to research_path
+    end
   end
 
   def update
@@ -25,7 +29,11 @@ class ArticlesController < ApplicationController
       flash[:danger] = "You can only edit articles that belong to you."
     end
 
-    redirect_to research_path
+    if article.topic.category == "research"
+      redirect_to research_path
+    elsif article.topic.category == "news"
+      redirect_to news_path
+    end
   end
 
   private

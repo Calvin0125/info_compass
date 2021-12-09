@@ -7,7 +7,7 @@ describe User do
 
   describe "associations" do
     it { should have_many(:topics) }
-    it { should have_many(:news_queries) }
+    it { should have_many(:api_queries) }
   end
 
   describe "validations" do
@@ -23,32 +23,51 @@ describe User do
       @user = Fabricate(:user)
     end
 
-    it "should return todays query count" do
+    it "should return todays query count for specified type (news)" do
       date = Time.now.in_time_zone(@user.time_zone).strftime("%F")
-      NewsQuery.create(user_id: @user.id, date: date, query_count: 15)
-      expect(@user.todays_news_query_count).to eq(15)
+      ApiQuery.create(user_id: @user.id, date: date, query_type: "news", query_count: 15)
+      expect(@user.todays_query_count("news")).to eq(15)
+    end
+
+    it "should return todays query count for specified type (research)" do
+      date = Time.now.in_time_zone(@user.time_zone).strftime("%F")
+      ApiQuery.create(user_id: @user.id, date: date, query_type: "research", query_count: 15)
+      expect(@user.todays_query_count("research")).to eq(15)
     end
 
     it "returns zero if no queries yet for today" do
-      expect(@user.todays_news_query_count).to eq(0)
+      expect(@user.todays_query_count("research")).to eq(0)
+      expect(@user.todays_query_count("news")).to eq(0)
     end
   end
 
-  describe "#add_news_query" do
+  describe "#add_query" do
     before :each do
       @user = Fabricate(:user)
     end
 
-    it "if today's date doesn't exist it should create it and set query_count to 1" do
-      @user.add_news_query
-      expect(@user.todays_news_query_count).to eq(1)
+    it "if today's date doesn't exist it should create it and set query_count to 1 (news)" do
+      @user.add_query("news")
+      expect(@user.todays_query_count("news")).to eq(1)
     end
 
-    it "adds one to query count if todays date already exists" do
-      NewsQuery.create(user_id: @user.id, date: Date.today, query_count: 12)
-      @user.add_news_query
-      expect(@user.todays_news_query_count).to eq(13)
+    it "if today's date doesn't exist it should create it and set query_count to 1 (research)" do
+      @user.add_query("research")
+      expect(@user.todays_query_count("research")).to eq(1)
     end
+
+    it "adds one to query count if todays date already exists (news)" do
+      ApiQuery.create(user_id: @user.id, date: Date.today, query_type: "news", query_count: 12)
+      @user.add_query("news")
+      expect(@user.todays_query_count("news")).to eq(13)
+    end
+
+    it "adds one to query count if todays date already exists (news)" do
+      ApiQuery.create(user_id: @user.id, date: Date.today, query_type: "research",  query_count: 12)
+      @user.add_query("research")
+      expect(@user.todays_query_count("research")).to eq(13)
+    end
+
   end
 
   describe "#set_token" do

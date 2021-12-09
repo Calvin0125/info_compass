@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   has_secure_password
 
   has_many :topics
-  has_many :news_queries
+  has_many :api_queries
 
   validates_presence_of :username, :email, :time_zone
   validates :password, length: { minimum: 8 }, if: :password_required?
@@ -12,23 +12,23 @@ class User < ActiveRecord::Base
     @enforce_password_validation = true
   end
 
-  def todays_news_query_count
+  def todays_query_count(type)
     date = Time.now.in_time_zone(self.time_zone).strftime("%F")
-    if self.news_queries.where(date: date).length == 0
+    if self.api_queries.where(date: date, query_type: type).length == 0
       return 0
     else
-      return self.news_queries.where(date: date).first.query_count
+      return self.api_queries.where(date: date, query_type: type).first.query_count
     end
   end
 
-  def add_news_query
+  def add_query(type)
     date = Time.now.in_time_zone(self.time_zone).strftime("%F")
  
-    if self.todays_news_query_count == 0
-      NewsQuery.create(user_id: self.id, date: date, query_count: 1)
+    if self.todays_query_count(type) == 0
+      ApiQuery.create(user_id: self.id, date: date, query_type: type, query_count: 1)
     else
-      query_count = self.todays_news_query_count
-      self.news_queries.where(date: date).first.update(query_count: query_count + 1)
+      query_count = self.todays_query_count(type)
+      self.api_queries.where(date: date, query_type: type).first.update(query_count: query_count + 1)
     end
   end
 
