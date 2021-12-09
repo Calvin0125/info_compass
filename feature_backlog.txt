@@ -1,10 +1,11 @@
 1. Feature test for resetting password 
 2. Add feature tests for research info modal, and updating status of articles. Selenium web driver wasn't working right and I needed to move on.
-3. Also add feature tests for research articles/search terms, they still use JS. 
+3. Also add feature tests for articles/search terms, they still use JS. 
 4. Show university affiliation and journal reference for research papers
 5. Add error handling for both APIs
-6. Use background jobs for the API calls and add a loading screen
-7. Add a stats page that shows how many papers/articles were published per day over time
-8. Allow users to schedule when they want news queried
-9. Add email alerts
+6. Make it so queries stop and a notice appears when DB hits 10,000 news queries
+7. Use background jobs for the API calls and add a loading screen
+8. Add a stats page that shows how many papers/articles were published per day over time
+9. Allow users to schedule when they want news queried
+10. Add email alerts
 
