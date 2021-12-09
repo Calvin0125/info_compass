@@ -10,6 +10,7 @@ describe Topic do
   describe "validations" do
     it { should validate_presence_of(:title) }
     it { should validate_presence_of(:category) }
+    it { should validate_uniqueness_of(:title).scoped_to(:category) }
     it "shouldn't allow a user to have more than 25 topics" do
       user = Fabricate(:user)
       25.times { |n| Fabricate(:topic, title: "Topic #{n}", user_id: user.id, id: n + 1) }

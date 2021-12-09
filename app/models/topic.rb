@@ -8,7 +8,7 @@ class Topic < ActiveRecord::Base
   belongs_to :user
 
   validates_presence_of :title, :category
-  validates_uniqueness_of :title
+  validates_uniqueness_of :title, scope: :category
   validate on: :create do
     if user && user.topics.length >= 25
       errors.add(:base, message: "You can't have more than 25 topics.")
