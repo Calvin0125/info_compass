@@ -6,5 +6,6 @@ Fabricator(:user) do
   time_zone { "Eastern Time (US & Canada)" }
   password { "password" }
   visited_research_topics { false }
+  visited_news_topics { false }
   token { nil }
 end

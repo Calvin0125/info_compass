@@ -4,17 +4,35 @@ describe TopicsController do
   describe "GET research_index" do
     context "no user logged in" do
       it_behaves_like "a page that requires login" do
-        let(:action) { post :create }
+        let(:action) { get :research_index }
       end
     end
     
     context "user logged in" do
-      it "sets visited_topics to true if user has not visited the page yet" do
+      it "sets visited_research_topics to true if user has not visited the page yet" do
         user = Fabricate(:user)
         login(user)
         get :research_index
         user.reload
         expect(user.visited_research_topics).to eq(true)
+      end
+    end
+  end
+  
+  describe "GET news_index" do
+    context "no user logged in" do
+      it_behaves_like "a page that requires login" do
+        let(:action) { post :news_index }
+      end
+    end
+    
+    context "user logged in" do
+      it "sets visited_news_topics to true if user has not visited the page yet" do
+        user = Fabricate(:user)
+        login(user)
+        get :news_index
+        user.reload
+        expect(user.visited_news_topics).to eq(true)
       end
     end
   end

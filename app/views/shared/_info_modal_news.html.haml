@@ -1,0 +1,16 @@
+.modal#infoModal{ tabindex: "-1", aria: { labelledby: "infoModalLabel", hidden: "false" } }
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        .modal-title.h4.text-dark#infoModalLabel= "About News Page"
+        %button.btn-close{ type: "button", data: { bs: { dismiss: "modal" } }, aria: { label: "Close" } }
+      .modal-body
+        %p.fs-5.mb-3.text-dark= "- On this page you can add up to 25 news topics."
+        %p.fs-5.mb-3.text-dark= "- You can request news articles for each topic up to 25 times per day."
+        %p.fs-5.mb-3.text-dark= "- When you create a topic, news articles are automatically requested."
+        %p.fs-5.mb-3.text-dark= "- The 25 most recent articles will appear in the 'new' section of each topic every day."
+        %p.fs-5.mb-3.text-dark= "- You will see up to 100 articles if there are that many published today. This is to ensure that you don't miss any new articles."
+        %p.fs-5.mb-3.text-dark= "- The 'new' section is automatically refreshed each time you add or delete a search term."
+        %p.fs-5.mb-3.text-dark= "- You can save the articles for later, mark them as read or not interested, or take notes about them."        
+        %p.fs-5.mb-3.text-dark= "- If you see older articles appearing in the 'new' section, then you have read or saved all of the newest articles and the algorithm is finding older ones so there is always something you haven't seen before."
+        %p.fs-5.mb-3.text-dark= "- Click the <i class='bi bi-question-circle mx-2 h4'></i> to see this message again.".html_safe

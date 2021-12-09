@@ -10,6 +10,9 @@ class TopicsController < ApplicationController
 
   def news_index
     render :news_index
+    if !helpers.current_user.visited_news_topics
+      helpers.current_user.update(visited_news_topics: true)
+    end
   end
 
   def create

@@ -1,0 +1,16 @@
+.modal#infoModal{ tabindex: "-1", aria: { labelledby: "infoModalLabel", hidden: "false" } }
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        .modal-title.h4.text-dark#infoModalLabel= "About Research Page"
+        %button.btn-close{ type: "button", data: { bs: { dismiss: "modal" } }, aria: { label: "Close" } }
+      .modal-body
+        %p.fs-5.mb-3.text-dark= "- On this page you can add up to 25 research topics."
+        %p.fs-5.mb-3.text-dark= "- Every 24 hours, the arXiv API is queried with the search terms you provide."
+        %p.fs-5.mb-3.text-dark= "- arXiv contains nearly 2 million scholarly articles in various academic fields."
+        %p.fs-5.mb-3.text-dark= "- The 10 most recent articles will appear in the 'new' section of each topic every day."
+        %p.fs-5.mb-3.text-dark= "- You will see up to 50 articles if they were published yesterday (added to arXiv today). This is to ensure that you don't miss any new articles."
+        %p.fs-5.mb-3.text-dark= "- The 'new' section is automatically refreshed each time you add or delete a search term."
+        %p.fs-5.mb-3.text-dark= "- You can save the articles for later, mark them as read or not interested, or take notes about them."        
+        %p.fs-5.mb-3.text-dark= "- If you see older articles appearing in the 'new' section, then you have read or saved all of the newest articles and the algorithm is finding older ones so there is always something you haven't seen before."
+        %p.fs-5.mb-3.text-dark= "- Click the <i class='bi bi-question-circle mx-2 h4'></i> to see this message again.".html_safe
