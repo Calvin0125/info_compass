@@ -7,7 +7,6 @@ describe Article do
 
   describe "validations" do
     it { should validate_presence_of(:title) }
-    it { should validate_presence_of(:author_csv) }
     it { should validate_presence_of(:summary) }
     it { should validate_presence_of(:api) }
     it { should validate_presence_of(:url) }

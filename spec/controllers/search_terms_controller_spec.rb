@@ -44,7 +44,7 @@ describe SearchTermsController do
       expect(response).to redirect_to research_path
     end
 
-    it "redirects to research topics index if the category if news", vcr: { re_record_interval: 7.days } do
+    it "redirects to news topics index if the category if news", vcr: { re_record_interval: 7.days } do
       user = Fabricate(:user)
       login(user)
       topic = Fabricate(:topic, category: "news", user_id: user.id)

@@ -3,7 +3,7 @@ class Article < ActiveRecord::Base
   
   default_scope { order('date_published DESC, time_published DESC, title') }
 
-  validates_presence_of :title, :author_csv, :summary, :api, :url, :date_published
+  validates_presence_of :title, :summary, :api, :url, :date_published
 
   def pretty_time_published
     return if !self.time_published
