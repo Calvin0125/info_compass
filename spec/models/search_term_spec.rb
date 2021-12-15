@@ -19,5 +19,16 @@ describe SearchTerm do
       
       expect(topic.reload.search_terms.length).to eq(10)
     end
+
+    it "shouldn't allow a term to have anything other than letters, numbers, and spaces" do
+      user = Fabricate(:user)
+      topic = Fabricate(:topic, user_id: user.id)
+      begin
+      Fabricate(:search_term, topic_id: topic.id, term: "adf;;")
+      rescue
+      end
+
+      expect(topic.reload.search_terms.length).to eq(0)
+    end
   end
 end

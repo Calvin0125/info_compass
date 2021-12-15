@@ -53,13 +53,7 @@ class Topic < ActiveRecord::Base
   end
 
   def get_recent_news_articles(search_terms)
-    articles = MediaStack.get_one_hundred_articles(search_terms, 0)
-    articles.each do |article|
-      if unique(article)
-        article[:topic_id] = self.id
-        Article.create(article)
-      end
-    end
+    process_next_hundred_news_articles(search_terms, 0)
   end
 
   def ensure_at_least_25_news_articles(search_terms)
