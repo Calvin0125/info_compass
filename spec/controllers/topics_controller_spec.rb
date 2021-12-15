@@ -56,6 +56,12 @@ describe TopicsController do
         expect(flash[:danger].length).to be > 0
       end
 
+      it "sets the flash warning if the user has used up their queries for the day" do
+        ApiQuery.create(user_id: @user.id, date: Date.today, query_type: "research", query_count: 25)
+        post :create, @params
+        expect(flash[:danger]).to eq("You can only request new articles 25 times per day.")
+      end
+
       it "creates the new topic for the logged in user", vcr: { re_record_interval: 7.days } do
         post :create, @params  
         expect(@user.topics.count).to eq(1)

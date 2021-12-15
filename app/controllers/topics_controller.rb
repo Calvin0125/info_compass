@@ -25,7 +25,8 @@ class TopicsController < ApplicationController
           SearchTerm.create(term: term, topic: topic)
         end
       end
-      topic.reload.add_new_articles
+      error = topic.reload.add_new_articles
+      flash[:danger] = error if error != ''
     else
       flash[:danger] = topic.errors.full_messages.join(" ")
     end

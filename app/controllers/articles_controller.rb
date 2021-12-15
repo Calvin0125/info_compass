@@ -7,11 +7,9 @@ class ArticlesController < ApplicationController
     user = helpers.current_user
     if topic.user != user
       flash[:danger] = "You can only request articles for topics that belong to you."
-    elsif user.todays_query_count("news") >= 25 ||
-          user.todays_query_count("research") >= 25
-      flash[:danger] = "You can only request new articles 25 times per day."
     else
-      topic.add_new_articles
+      error = topic.add_new_articles
+      flash[:danger] = error if error != ''
     end
 
     if topic.category == "news"

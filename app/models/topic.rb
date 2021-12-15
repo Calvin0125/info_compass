@@ -30,8 +30,6 @@ class Topic < ActiveRecord::Base
   end
 
   def add_new_articles
-    self.user.add_query(self.category)
-
     if self.category == "research"
       self.add_new_research_articles
     elsif self.category == "news"    
@@ -40,12 +38,18 @@ class Topic < ActiveRecord::Base
   end
 
   def add_new_news_articles
+    error = "You can only request new articles 25 times per day."
+    return error if self.user.todays_query_count("news") >= 25
+
+    self.user.add_query("news")
+
     search_terms = self.search_terms.map(&:term)
     return if search_terms == []
 
     self.get_recent_news_articles(search_terms)
     self.ensure_at_least_25_news_articles(search_terms)
     self.remove_old_news_articles_marked_new
+    return ''
   end
 
   def get_recent_news_articles(search_terms)
@@ -96,6 +100,11 @@ class Topic < ActiveRecord::Base
   end
 
   def add_new_research_articles
+    error = "You can only request new articles 25 times per day."
+    return error if self.user.todays_query_count("research") >= 25
+
+    self.user.add_query("research")
+
     search_terms = self.search_terms.map(&:term)
     return if search_terms == []
 
@@ -104,6 +113,7 @@ class Topic < ActiveRecord::Base
     # if user did not read or save articles added yesterday
     # they will be replaced by the new articles added today
     self.remove_old_research_articles_marked_new
+    return ''
   end
 
   def get_recent_research_articles(search_terms)

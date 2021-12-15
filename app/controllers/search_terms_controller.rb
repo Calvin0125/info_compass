@@ -4,7 +4,8 @@ class SearchTermsController < ApplicationController
     topic = term.topic
     if topic.user == helpers.current_user
       if term.save
-        topic.reload.refresh_new_articles
+        error = topic.reload.refresh_new_articles
+        flash[:danger] = error if error != ''
       else
         flash[:danger] = term.errors.full_messages.join(" ")
       end
@@ -24,7 +25,8 @@ class SearchTermsController < ApplicationController
     topic = term.topic
     if topic.user == helpers.current_user
       term.destroy
-      topic.refresh_new_articles
+      error = topic.refresh_new_articles
+      flash[:danger] = error if error != ''
     else
       flash[:danger] = "You can only delete search terms for topics that belong to you."
     end

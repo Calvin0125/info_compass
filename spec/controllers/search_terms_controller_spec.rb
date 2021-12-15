@@ -36,6 +36,15 @@ describe SearchTermsController do
       expect(flash[:danger]).to eq("You can only add search terms to topics that belong to you.") 
     end
 
+    it "sets the flash warning if a user has used up their search queries for the day", vcr: { re_record_interval: 7.days } do
+      user = Fabricate(:user)
+      login(user)
+      topic = Fabricate(:topic, user_id: user.id)
+      ApiQuery.create(user_id: user.id, date: Date.today, query_type: "research", query_count: 25)
+      post :create, params: { search_term: { term: "crispr", topic_id: topic.id } }
+      expect(flash[:danger]).to eq("You can only request new articles 25 times per day.")
+    end
+
     it "redirects to research topics index if the category if research", vcr: { re_record_interval: 7.days } do
       user = Fabricate(:user)
       login(user)
@@ -89,6 +98,16 @@ describe SearchTermsController do
       term = Fabricate(:search_term, topic_id: topic.id)
       delete :destroy, params: { id: term.id.to_s }
       expect(flash[:danger]).to eq("You can only delete search terms for topics that belong to you.")
+    end
+
+    it "sets the flash warning if a user has used up their search queries for the day", vcr: { re_record_interval: 7.days } do
+      user = Fabricate(:user)
+      login(user)
+      topic = Fabricate(:topic, user_id: user.id)
+      term = Fabricate(:search_term, topic_id: topic.id)
+      ApiQuery.create(user_id: user.id, date: Date.today, query_type: "research", query_count: 25)
+      delete :destroy, params: { id: term.id.to_s }
+      expect(flash[:danger]).to eq("You can only request new articles 25 times per day.")
     end
 
     it "redirects to the research page if category is research", vcr: { re_record_interval: 7.days } do
