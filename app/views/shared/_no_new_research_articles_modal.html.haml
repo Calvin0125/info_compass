@@ -1,0 +1,9 @@
+%button.btn.btn-primary.mt-3{ data: { bs: { toggle: "modal", target: "#noNewResearchArticlesModal" } } }= "Get New Articles"
+.modal#noNewResearchArticlesModal{ tabindex: "-1", aria: { hidden: "true" } }
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.btn-close{ type: "button", data: { bs: { dismiss: "modal" } }, aria: { label: "Close" } }
+      .modal-body
+        %p= "You already have all of today's newest articles, you can request more research articles once you have fewer than 10 in your new articles queue."
+       
