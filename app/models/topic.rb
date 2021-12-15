@@ -43,28 +43,18 @@ class Topic < ActiveRecord::Base
     search_terms = self.search_terms.map(&:term)
     return if search_terms == []
 
-    self.get_todays_news_articles_up_to_100(search_terms)
+    self.get_recent_news_articles(search_terms)
     self.ensure_at_least_25_news_articles(search_terms)
     self.remove_old_news_articles_marked_new
   end
 
-  def get_todays_news_articles_up_to_100(search_terms)
-    page = 0
-    loop do
-      articles = MediaStack.get_one_hundred_articles(search_terms, page)
-      articles.each do |article|
-        if published_today(article) && unique(article) &&
-           self.news_new_today_count < 100 
-          article[:topic_id] = self.id
-          Article.create(article)
-        end
+  def get_recent_news_articles(search_terms)
+    articles = MediaStack.get_one_hundred_articles(search_terms, 0)
+    articles.each do |article|
+      if unique(article)
+        article[:topic_id] = self.id
+        Article.create(article)
       end
-
-      if articles.length < 100 || !published_today(articles[99]) ||
-         self.news_new_today_count >= 100 
-        break
-      end
-      page += 1
     end
   end
 
@@ -109,20 +99,19 @@ class Topic < ActiveRecord::Base
     search_terms = self.search_terms.map(&:term)
     return if search_terms == []
 
-    self.get_todays_research_articles_up_to_50(search_terms)
+    self.get_recent_research_articles(search_terms)
     self.ensure_at_least_10_research_articles(search_terms)
     # if user did not read or save articles added yesterday
     # they will be replaced by the new articles added today
     self.remove_old_research_articles_marked_new
   end
 
-  def get_todays_research_articles_up_to_50(search_terms)
+  def get_recent_research_articles(search_terms)
     page = 0
     loop do
       articles = Arxiv.get_ten_articles(search_terms, page)
       articles.each do |article|
-        if published_yesterday(article) && unique(article) &&
-           self.research_new_today_count < 50 
+        if unique(article)
           article[:topic_id] = self.id
           Article.create(article)
         end
